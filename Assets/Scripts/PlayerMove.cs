@@ -49,7 +49,7 @@ public class PlayerMove : MonoBehaviour
         tryLaneChange(); // 차선변경이 입력되면 동작함
 
         // 디버깅용
-        text.text = Time.time.ToString() +'\n' + currentSpeed.ToString();
+        text.text = Time.time.ToString() + '\n' + currentSpeed.ToString();
     }
 
     // 차선변경을 시도하는 함수
@@ -78,11 +78,11 @@ public class PlayerMove : MonoBehaviour
     // 이동하려는 방향에 차선이 있는지 체크하는 함수
     private bool roadCheck(string direction)
     {
-        if(direction == "left") // 왼쪽차선이 있는지 체크
+        if (direction == "left") // 왼쪽차선이 있는지 체크
         {
             return roadChecker[0].GetComponent<RoadChecker>().isRoadExist;
         }
-        else if(direction == "right") // 오른쪽차선에 있는지 체크
+        else if (direction == "right") // 오른쪽차선에 있는지 체크
         {
             return roadChecker[1].GetComponent<RoadChecker>().isRoadExist;
         }

@@ -8,7 +8,7 @@ public class RoadChecker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) // 콜라이더에 차선이 감지되면 isRoadExist 가 있다고 함
     {
-        if(other.gameObject.tag == "Road")
+        if (other.gameObject.tag == "Road")
         {
             isRoadExist = true;
         }
