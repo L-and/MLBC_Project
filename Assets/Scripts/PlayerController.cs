@@ -3,15 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     // 디버깅용 변수들
     public TextMeshProUGUI text;
-
-    // 속도관련 변수
-    public float accuacceleration; // 가속도
-    private float currentSpeed; // 현재속도
-    public float maxSpeed; // 최대속도
 
     public GameObject[] roadChecker; // 차선변경 시 차선이 있는가 체크하는용도의 콜라이더
 
@@ -27,13 +22,14 @@ public class PlayerMove : MonoBehaviour
     private Vector3 targetPosition; // 이동할 위치
 
     // 컴포넌트 변수들
+    private UnitMove unitMove;
     private Rigidbody rigid;
 
     private void Start()
     {
         // 컴포넌트변수 초기화
         rigid = GetComponent<Rigidbody>();
-
+        unitMove = GameObject.FindGameObjectWithTag("Player").GetComponent<UnitMove>();
 
         // 일반변수 초기화
         roadOffset = road[0].transform.position - road[1].transform.position; // 도로와 도로사이의 간격을 지정해줌
@@ -44,12 +40,11 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        moveForward(); // 전진이동
         playerControll(); // 플레이어 조작(좌,우,아래 슬라이드)
         tryLaneChange(); // 차선변경이 입력되면 동작함
 
         // 디버깅용
-        text.text = Time.time.ToString() + '\n' + currentSpeed.ToString();
+        text.text = Time.time.ToString() + '\n' + unitMove.speed.ToString();
     }
 
     // 차선변경을 시도하는 함수
@@ -66,7 +61,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (Mathf.Abs(transform.position.x - targetPosition.x) >= 0.01) // targetPos와 0.01 이내로 가까워지기 전이라면
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * currentSpeed); // targetPosition으로 위치이동
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * unitMove.speed); // targetPosition으로 위치이동
             targetPosition.z = transform.position.z; // 앞으로 이동중인걸 반영하기위해 z값을 업데이트해줌
         }
         else // 이동이 끝났으면 
@@ -121,7 +116,7 @@ public class PlayerMove : MonoBehaviour
                     else if (screenTouch.deltaPosition.y < 0)
                     {
                         Debug.Log("[브레이크]");
-                        currentSpeed -= 0.1f;
+                        unitMove.speed -= 0.1f;
                     }
                 }
             }
@@ -135,14 +130,7 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    // 버스를 앞으로 이동시키는 함수
-    private void moveForward()
-    {
-        if (rigid.velocity.magnitude <= maxSpeed) // 최대속도보다 현재속도가 낮으면
-            rigid.AddRelativeForce(transform.forward * accuacceleration); // 가속
-
-        currentSpeed = rigid.velocity.magnitude;
-    }
+    
 
 
 }

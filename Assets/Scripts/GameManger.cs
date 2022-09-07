@@ -36,7 +36,6 @@ public class GameManger : MonoBehaviour
 
                 float currentTime = Time.time;
                 score = (stationScore * scoreMultiple) / (currentTime - intervalTime);
-                print(currentTime - intervalTime);
             }
         }
     }
