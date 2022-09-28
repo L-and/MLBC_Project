@@ -40,7 +40,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        playerControll(); // 플레이어 조작(좌,우,아래 슬라이드)
+        playerControllTouch(); // 플레이어 조작[터치]
+        playerControllKeyboard(); // 플레이어 조작[키보드]
+
         tryLaneChange(); // 차선변경이 입력되면 동작함
 
         // 디버깅용
@@ -71,6 +73,11 @@ public class PlayerController : MonoBehaviour
     }
 
     // 이동하려는 방향에 차선이 있는지 체크하는 함수
+    /// <summary>
+    /// direction: "left" or "right"
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
     private bool roadCheck(string direction)
     {
         if (direction == "left") // 왼쪽차선이 있는지 체크
@@ -85,8 +92,8 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    // 차선변경을 하는 함수
-    private void playerControll()
+    // 차선변경[터치]
+    private void playerControllTouch()
     {
         if (Input.touchCount == 1) // 터치가 입력됨
         {
@@ -99,7 +106,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (screenTouch.deltaPosition.x > slideSensitivity && roadCheck("right")) // 우로 슬라이드
                     {
-                        Debug.Log("[차선변경]오른쪽");
+                        Debug.Log("[슬라이드]오른쪽");
 
                         targetPosition = transform.position + transform.right;
 
@@ -107,7 +114,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else if (screenTouch.deltaPosition.x < -slideSensitivity && roadCheck("left")) // 좌로 슬라이드
                     {
-                        Debug.Log("[차선변경]왼쪽");
+                        Debug.Log("[슬라이드]왼쪽");
 
                         targetPosition = transform.position - transform.right;
 
@@ -129,8 +136,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //차선변경[키보드]
+    private void playerControllKeyboard()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftArrow) && roadCheck("left")) // 왼쪽 방향키 입력
+        {
+            Debug.Log("[키보드]왼쪽");
 
-    
+            targetPosition = transform.position - transform.right;
+        }
+        else if(Input.GetKeyDown(KeyCode.RightArrow) && roadCheck("right")) // 오른쪽 방향키 입력
+        {
+            Debug.Log("[키보드]오른쪽");
+
+            targetPosition = transform.position + transform.right;
+        }
+    }
 
 
 }
