@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class GameManager : MonoBehaviour
+public class GameManger : MonoBehaviour
 {
     private GameObject[] unitGameObjects;
     private UnitMove[] unitMoves; // 모든 유닛들의 unitMove
-
     private PlayerController playerController;
 
     private bool _isGameRunning = false; // 게임실행시 true
@@ -58,7 +57,7 @@ public class GameManager : MonoBehaviour
 // 에디터에서 bool변수 수정을 위한 스크립트
 #if UNITY_EDITOR
 [CustomEditor(typeof(GameManger))]
-public class GameManagerEditor : Editor
+public class GameMangerEditor : Editor
 {
     public GameManger script;
 
