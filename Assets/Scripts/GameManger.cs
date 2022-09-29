@@ -1,53 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class GameManger : MonoBehaviour
 {
-    [SerializeField] // 임시
-    private int busStationCount; // 지나친 버스정류장의 수
+    private UnitMove unitMove;
+    private PlayerController playerController;
 
-    [SerializeField] // 임시
-    private float score; // 승객만족도(점수)
-    public float stationScore; // 정류장 점수
+    private bool _isGameRunning = false;
 
-    public float scoreMultiple; // 점수 배율
+    public bool isGameRunning
+    {
+        get { return _isGameRunning; }
+        set
+        {
+            _isGameRunning = !_isGameRunning;
 
-    public float intervalTime;
+            if(_isGameRunning == true)
+                activateComponents();
+        }
+    }
 
     private void Start()
     {
-        score = 0; // 점수 초기화
+        unitMove = gameObject.GetComponent<UnitMove>();
+        playerController = gameObject.GetComponent<PlayerController>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void activateComponents()
     {
-        if (gameObject.tag == "Player")
-        {
-            if (other.gameObject.tag == "EndPoint")
-            {
-                print("스테이지 종료");
-            }
+        unitMove.enabled = true;
+        playerController.enabled = true;
+    }
+    
+    
+}
 
-            if (other.gameObject.tag == "BusStation")
-            {
-                print("정류장 경유");
-                busStationCount++;
 
-                float currentTime = Time.time;
-                score = (stationScore * scoreMultiple) / (currentTime - intervalTime);
-            }
-        }
+#if UNITY_EDITOR
+[CustomEditor(typeof(GameManger))]
+public class GameMangerEditor : Editor
+{
+    public GameManger script;
+
+    public void OnEnable()
+    {
+        script = (GameManger)target;
     }
 
-    private void OnTriggerExit(Collider other)
+    public override void OnInspectorGUI()
     {
-        if (gameObject.tag == "Player")
+        bool is_isGameRunning = !script.isGameRunning;
+        GUI.backgroundColor = (is_isGameRunning ? Color.red : Color.green);
+
+        if(GUILayout.Button("isGameRunning is"+script.isGameRunning+"(Click to make "+is_isGameRunning+")"))
         {
-            if (other.gameObject.tag == "BusStation")
-            {
-                intervalTime = Time.time;
-            }
+            script.isGameRunning = is_isGameRunning;
         }
+
+        GUI.backgroundColor = Color.white;
+        base.OnInspectorGUI();
     }
 }
+
+#endif
