@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     private GameObject[] unitGameObjects;
     private UnitMove[] unitMoves; // 모든 유닛들의 unitMove
+    private UnitMove playerUnitMove;
 
     private PlayerController playerController;
 
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
         {
             unitMoves[i] = unitGameObjects[i].GetComponent<UnitMove>();
         }
-
+        playerUnitMove = gameObject.GetComponent<UnitMove>();
 
         playerController = gameObject.GetComponent<PlayerController>();
 
@@ -47,6 +48,8 @@ public class GameManager : MonoBehaviour
         {
             unitMoves[i].enabled = true;
         }
+        playerUnitMove.enabled = true;
+
         playerController.enabled = true;
     }
 
