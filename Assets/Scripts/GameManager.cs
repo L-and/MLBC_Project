@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+///////////유니티 에디터/////////////
+# if UNITY_EDITOR
+        _isGameRunning = true;
+# endif
+//////////////////////////////////
         unitGameObjects = GameObject.FindGameObjectsWithTag("Unit");
 
         unitMoves = new UnitMove[unitGameObjects.Length];
