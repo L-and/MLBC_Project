@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         tryLaneChange(); // 차선변경이 입력되면 동작함
 
         // 디버깅용
-        text.text = Time.time.ToString() + '\n' + unitMove.GetCurrentSpeed().speed.ToString();
+        text.text = Time.time.ToString() + '\n' + unitMove.speed.ToString();
     }
 
     // 차선변경을 시도하는 함수
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Mathf.Abs(transform.position.x - targetPosition.x) >= 0.01) // targetPos와 0.01 이내로 가까워지기 전이라면
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * unitMove.GetCurrentSpeed().speed); // targetPosition으로 위치이동
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * unitMove.speed); // targetPosition으로 위치이동
             targetPosition.z = transform.position.z; // 앞으로 이동중인걸 반영하기위해 z값을 업데이트해줌
         }
         else // 이동이 끝났으면 
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
                     else if (screenTouch.deltaPosition.y < 0)
                     {
                         Debug.Log("[브레이크]");
-                        unitMove.GetCurrentSpeed().speed -= 0.1f;
+                        unitMove.speed -= 0.1f;
                     }
                 }
             }

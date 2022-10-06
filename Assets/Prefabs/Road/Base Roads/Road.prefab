@@ -1901,28 +1901,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8963285115032369319, guid: 5b52190c41416b6489b192284e068382, type: 3}
   m_PrefabInstance: {fileID: 1099108256141265035}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8296524898393862192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8963285115032369339, guid: 5b52190c41416b6489b192284e068382, type: 3}
-  m_PrefabInstance: {fileID: 1099108256141265035}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1099108255941788280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8296524898393862192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f9ab3ee08e24a64fa972d1a843f0bc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  busStationCount: 0
-  score: 0
-  stationScore: 0
-  scoreMultiple: 0
-  intervalTime: 0
 --- !u!1001 &1099108256187165013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2050,28 +2028,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b52190c41416b6489b192284e068382, type: 3}
---- !u!1 &8296524898299678893 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8963285115032369339, guid: 5b52190c41416b6489b192284e068382, type: 3}
-  m_PrefabInstance: {fileID: 1099108256247900182}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1099108256002935670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8296524898299678893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f9ab3ee08e24a64fa972d1a843f0bc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  busStationCount: 0
-  score: 0
-  stationScore: 0
-  scoreMultiple: 0
-  intervalTime: 0
 --- !u!4 &8296524898299678897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8963285115032369319, guid: 5b52190c41416b6489b192284e068382, type: 3}
