@@ -143,7 +143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &410968436
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -158,7 +158,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 118
   m_CollisionDetection: 0
 --- !u!114 &410968437
 MonoBehaviour:
@@ -167,14 +167,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410968435}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c4d2ac6dd738f439d50c9d9b818f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accuacceleration: 1
-  speed: 0
-  maxSpeed: 10
+  currentSpeed:
+    speed: 0
+    maxSpeed: 0
+    accuacceleration: 0
   unitChecker: {fileID: 0}
 --- !u!65 &410968438
 BoxCollider:
@@ -184,7 +185,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410968435}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -816,7 +817,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1048292664
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -831,7 +832,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 118
   m_CollisionDetection: 0
 --- !u!114 &1048292665
 MonoBehaviour:
@@ -840,14 +841,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048292663}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c4d2ac6dd738f439d50c9d9b818f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accuacceleration: 1
-  speed: 0
-  maxSpeed: 10
+  currentSpeed:
+    speed: 0
+    maxSpeed: 0
+    accuacceleration: 0
   unitChecker: {fileID: 0}
 --- !u!65 &1048292666
 BoxCollider:
@@ -857,7 +859,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048292663}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1009,7 +1011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1263081564
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1018,7 +1020,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263081563}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1095,14 +1097,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263081563}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c4d2ac6dd738f439d50c9d9b818f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accuacceleration: 1
-  speed: 0
-  maxSpeed: 10
+  currentSpeed:
+    speed: 0
+    maxSpeed: 0
+    accuacceleration: 0
   unitChecker: {fileID: 0}
 --- !u!54 &1263081569
 Rigidbody:
@@ -1118,7 +1121,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 118
   m_CollisionDetection: 0
 --- !u!1 &1301536682
 GameObject:
@@ -1137,7 +1140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1301536683
 Transform:
   m_ObjectHideFlags: 0
@@ -1267,7 +1270,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374214386}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1356,7 +1359,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!65 &1374214393
 BoxCollider:
@@ -1383,11 +1386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f9ab3ee08e24a64fa972d1a843f0bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  busStationCount: 0
-  score: 0
-  stationScore: 1
-  scoreMultiple: 1
-  intervalTime: 0
 --- !u!114 &1374214395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1395,14 +1393,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374214386}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c4d2ac6dd738f439d50c9d9b818f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accuacceleration: 10
-  speed: 0
-  maxSpeed: 50
+  currentSpeed:
+    speed: 0
+    maxSpeed: 30
+    accuacceleration: 5
   unitChecker: {fileID: 1301536686}
 --- !u!114 &1374214397
 MonoBehaviour:
@@ -1411,7 +1410,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374214386}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e439893bf0f539f4db291fd83e3ce895, type: 3}
   m_Name: 
