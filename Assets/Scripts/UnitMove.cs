@@ -48,23 +48,23 @@ public class UnitMove : MonoBehaviour
         transform.position += Vector3.forward * currentSpeed.speed * Time.deltaTime;
     }
 
-    public void changeMaxSpeed(GameObject otherUnit) // 유닛앞에 다른 유닛이 있을 때 최대속도변경함수
+    public void ChangeSpeedWithOtherUnit(GameObject otherUnit) // 유닛앞에 다른 유닛이 있을 때 최대속도변경함수
     {
             if (otherUnit != null)
             {
                 UnitMove otherUnitMove = otherUnit.GetComponent<UnitMove>();
 
-            // 다른 유닛의 속도값으로 변경해줌
+                // 다른 유닛의 속도값으로 변경해줌
                 if (currentSpeed.speed > otherUnitMove.currentSpeed.speed) // 이 유닛이 다른 유닛보다 속도가 빠를경우
                 currentSpeed.speed = otherUnitMove.currentSpeed.speed; // 다른 유닛의 속도로 변경
 
-            currentSpeed.accuacceleration = otherUnitMove.currentSpeed.accuacceleration;
-            currentSpeed.maxSpeed = otherUnitMove.currentSpeed.maxSpeed;
+                currentSpeed.accuacceleration = otherUnitMove.currentSpeed.accuacceleration;
+                currentSpeed.maxSpeed = otherUnitMove.currentSpeed.maxSpeed;
             }
             else if (otherUnit == null)
-        {
-            // 원래의 속도값들로 변경해줌
-            currentSpeed.accuacceleration = originalSpeed.accuacceleration;
+            {
+                // 원래의 속도값들로 변경해줌
+                currentSpeed.accuacceleration = originalSpeed.accuacceleration;
                 currentSpeed.maxSpeed = originalSpeed.maxSpeed;
             }
     }
@@ -79,7 +79,13 @@ public class UnitMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        GameObject collisionObject = collision.gameObject;
         
+        if(collisionObject.tag == "Unit") // 다른유닛과 충돌하면 게임오버
+        {
+            // 게임오버
+        }
+
     }
 
     public Speed GetOriginalSpeed()
@@ -91,4 +97,5 @@ public class UnitMove : MonoBehaviour
     {
         return currentSpeed;
     }
+
 }

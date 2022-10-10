@@ -13,15 +13,24 @@ public class UnitChecker : MonoBehaviour
         unitMove = transform.root.gameObject.GetComponent<UnitMove>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) // 다른유닛과 충돌할 때
     {
-        if (other.tag == "Unit" || other.tag == "Player")
-            unitMove.changeMaxSpeed(other.gameObject);
+        Debug.Log("충돌시작");
+        if (other.tag == "Unit")
+            unitMove.ChangeSpeedWithOtherUnit(other.gameObject); // 다른유닛의 속도로 현재유닛의 속도를 조정
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerStay(Collider other) // 다른유닛과 충돌중일 때
     {
-        if (other.tag == "Unit" || other.tag == "Player")
-            unitMove.changeMaxSpeed(null);
+        Debug.Log("충돌중");
+        if (other.tag == "Unit" && unitMove.GetCurrentSpeed().maxSpeed == unitMove.GetCurrentSpeed().speed) // 유닛이 최고속도에 도달해있으면 
+            unitMove.ChangeSpeedWithOtherUnit(other.gameObject);
+    }
+
+    private void OnTriggerExit(Collider other) // 다른유닛과 충돌이 끝났을 때
+    {
+        Debug.Log("충돌끝");
+        if (other.tag == "Unit")
+            unitMove.ChangeSpeedWithOtherUnit(null); // 유닛의 속도를 원래대로 복원
     }
 }
