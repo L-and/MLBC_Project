@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         tryLaneChange(); // 차선변경이 입력되면 동작함
 
         // 디버깅용
-        text.text = Time.time.ToString() + '\n' + unitMove.GetCurrentSpeed().speed.ToString();
+        //text.text = Time.time.ToString() + '\n' + unitMove.GetCurrentSpeed().speed.ToString();
     }
 
     // 차선변경을 시도하는 함수
