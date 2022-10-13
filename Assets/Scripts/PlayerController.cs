@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
                     {
                         Debug.Log("[슬라이드]오른쪽");
 
-                        targetPosition = transform.position + transform.right;
+                        changeTargetPosition(roadOffset);
 
                         isSlideActivate = false; // 더이상 터치입력이 되지않도록 설정
                     }
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
                     {
                         Debug.Log("[슬라이드]왼쪽");
 
-                        targetPosition = transform.position - transform.right;
+                        changeTargetPosition(-roadOffset);
 
                         isSlideActivate = false; // 더이상 터치입력이 되지않도록 설정
                     }
@@ -143,15 +143,19 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("[키보드]왼쪽");
 
-            targetPosition = transform.position - transform.right;
+            changeTargetPosition(roadOffset);
         }
         else if(Input.GetKeyDown(KeyCode.RightArrow) && roadCheck("right")) // 오른쪽 방향키 입력
         {
             Debug.Log("[키보드]오른쪽");
 
-            targetPosition = transform.position + transform.right;
+            changeTargetPosition(-roadOffset);
         }
     }
 
+    private void changeTargetPosition(Vector3 changeVector)
+    {
+        targetPosition = transform.position + changeVector;
+    }
 
 }
