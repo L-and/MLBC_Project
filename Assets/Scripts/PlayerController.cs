@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public GameObject[] roadChecker; // 차선변경 시 차선이 있는가 체크하는용도의 콜라이더
 
     // 도로간 offset을 얻기위한 변수
-    public GameObject[] road;
+    public GameObject[] road = new GameObject[2];
     private Vector3 roadOffset;
 
     // 슬라이드입력 관련 변수
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         unitMove = GameObject.FindGameObjectWithTag("Player").GetComponent<UnitMove>();
 
         // 일반변수 초기화
-        roadOffset = road[0].transform.position - road[1].transform.position; // 도로와 도로사이의 간격을 지정해줌
+        roadOffset = road[1].transform.position - road[0].transform.position; // 도로와 도로사이의 간격을 지정해줌
         isSlideActivate = true; // 슬라이드 입력이 가능하게 초기설정
         targetPosition = Vector3.zero; // 차선변경시 목표위치를 설정
     }
@@ -143,13 +143,13 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("[키보드]왼쪽");
 
-            changeTargetPosition(roadOffset);
+            changeTargetPosition(-roadOffset);
         }
         else if(Input.GetKeyDown(KeyCode.RightArrow) && roadCheck("right")) // 오른쪽 방향키 입력
         {
             Debug.Log("[키보드]오른쪽");
 
-            changeTargetPosition(-roadOffset);
+            changeTargetPosition(roadOffset);
         }
     }
 
