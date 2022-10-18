@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     public bool isSlideActivate; // 슬라이드를 한번할때 차선을 1칸만 움직이기 위한 변수
     public float slideSensitivity; // 슬라이드 민감도
 
+    // 키보드입력 관련 변수
+    private bool isKeyInputEnabled;
+
     // 차선이동을 위한 변수
     private Vector3 targetPosition; // 이동할 위치
 
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
         roadOffset = road[1].transform.position - road[0].transform.position; // 도로와 도로사이의 간격을 지정해줌
         isSlideActivate = true; // 슬라이드 입력이 가능하게 초기설정
         targetPosition = Vector3.zero; // 차선변경시 목표위치를 설정
+        isKeyInputEnabled = true;
     }
 
 
@@ -69,6 +73,9 @@ public class PlayerController : MonoBehaviour
         else // 이동이 끝났으면 
         {
             targetPosition = Vector3.zero;
+
+            isSlideActivate = true; // 다시 터치입력을 받도록 해줌
+            isKeyInputEnabled = true; // 다시 키입력을 받도록 해줌
         }
     }
 
@@ -129,27 +136,28 @@ public class PlayerController : MonoBehaviour
             }
 
 
-            if (screenTouch.phase == TouchPhase.Ended) // 터치가 끝나면
-            {
-                isSlideActivate = true; // 다시 터치입력을 받도록 해줌
-            }
         }
     }
 
     //차선변경[키보드]
     private void playerControllKeyboard()
     {
-        if(Input.GetKeyDown(KeyCode.LeftArrow) && roadCheck("left")) // 왼쪽 방향키 입력
+        if (isKeyInputEnabled)
         {
-            Debug.Log("[키보드]왼쪽");
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && roadCheck("left")) // 왼쪽 방향키 입력
+            {
+                Debug.Log("[키보드]왼쪽");
 
-            changeTargetPosition(-roadOffset);
-        }
-        else if(Input.GetKeyDown(KeyCode.RightArrow) && roadCheck("right")) // 오른쪽 방향키 입력
-        {
-            Debug.Log("[키보드]오른쪽");
+                changeTargetPosition(-roadOffset);
+                isKeyInputEnabled = false; // 이동이 끝날떄까지 키입력을 멈춰둠
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) && roadCheck("right")) // 오른쪽 방향키 입력
+            {
+                Debug.Log("[키보드]오른쪽");
 
-            changeTargetPosition(roadOffset);
+                changeTargetPosition(roadOffset);
+                isKeyInputEnabled = false;
+            }
         }
     }
 
