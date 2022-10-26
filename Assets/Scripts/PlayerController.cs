@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour
 
     public void playerDie()
     {
-        // 게임오버 처리
+        Debug.Log("게임오버");
     }
 
 }
