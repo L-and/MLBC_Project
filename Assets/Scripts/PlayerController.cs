@@ -79,8 +79,6 @@ public class PlayerController : MonoBehaviour
     {
         if (isLaneChanging == false)
         {
-            colliderChange(); // 차선변경 시 콜라이더로 변경
-            //laneChange();
             StartCoroutine(laneChangeCoroutine()); // 차선변경
         }
     }
@@ -92,46 +90,27 @@ public class PlayerController : MonoBehaviour
         isSlideActivate = false; isKeyInputEnabled = false; // 이동이 끝날떄까지 입력을 막아둠
         isLaneChanging = true;
 
-        float distance = Vector3.Distance(transform.position, targetPosition);
-
+        colliderChange(); // 차선변경 시 콜라이더로 변경
         while (true)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * unitMove.GetCurrentSpeed().speed); // targetPosition으로 위치이동
             targetPosition.z = transform.position.z; // 앞으로 이동중인걸 반영하기위해 z값을 업데이트해줌
 
-
+            float distance = Vector3.Distance(transform.position, targetPosition);
             if (distance <= 0.1f) // 타겟위치로 가까워졌으면
             {
                 print("Stop");
                 transform.position = targetPosition;
 
-                yield return null;
                 break;
             }
+            yield return null;
 
         }
         isLaneChanging = false; // 차선변경중 = false
         isSlideActivate = true; // 다시 터치입력을 받도록 해줌
         isKeyInputEnabled = true; // 다시 키입력을 받도록 해줌
         colliderChange();
-    }
-
-    private void laneChange()
-    {
-        if (Mathf.Abs(transform.position.x - targetPosition.x) >= 0.01) // targetPos와 0.01 이내로 가까워지기 전이라면
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * unitMove.GetCurrentSpeed().speed); // targetPosition으로 위치이동
-            targetPosition.z = transform.position.z; // 앞으로 이동중인걸 반영하기위해 z값을 업데이트해줌
-        }
-        else
-        {
-            // 이동이 끝난 후 
-            isLaneChanging = false; // 차선변경중 = false
-            isSlideActivate = true; // 다시 터치입력을 받도록 해줌
-            isKeyInputEnabled = true; // 다시 키입력을 받도록 해줌
-            colliderChange(); // 콜라이더를 일반으로 변경
-        }
-       
     }
 
     // 이동하려는 방향에 차선이 있는지 체크하는 함수
@@ -222,7 +201,7 @@ public class PlayerController : MonoBehaviour
         targetPosition = transform.position + changeVector;
     }
 
-    private void playerDie()
+    public void playerDie()
     {
         // 게임오버 처리
     }
