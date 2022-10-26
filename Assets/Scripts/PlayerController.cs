@@ -23,10 +23,17 @@ public class PlayerController : MonoBehaviour
 
     // 차선이동을 위한 변수
     private Vector3 targetPosition; // 이동할 위치
+    private bool isLaneChanging; // 현재 차선이 변경중인지를 저장
 
     // 컴포넌트 변수들
     private UnitMove unitMove;
     private Rigidbody rigid;
+
+    // Collider 오브젝트
+    [SerializeField]
+    private GameObject normalCollider; // 평상시 콜라이더
+    [SerializeField]
+    private GameObject laneChangingCollider; // 라인변경 시 콜라이더
 
     private void Start()
     {
@@ -39,6 +46,16 @@ public class PlayerController : MonoBehaviour
         isSlideActivate = true; // 슬라이드 입력이 가능하게 초기설정
         targetPosition = Vector3.zero; // 차선변경시 목표위치를 설정
         isKeyInputEnabled = true;
+        isLaneChanging = false;
+
+        // 차량 콜라이더 활성, 비활성화 설정
+        if (normalCollider == null || laneChangingCollider == null)
+            Debug.Log("차량 콜라이더를 설정해주세요.");
+        else
+        {
+            normalCollider.SetActive(true);
+            laneChangingCollider.SetActive(false);
+        }
     }
 
 
@@ -47,22 +64,58 @@ public class PlayerController : MonoBehaviour
         playerControllTouch(); // 플레이어 조작[터치]
         playerControllKeyboard(); // 플레이어 조작[키보드]
 
-        tryLaneChange(); // 차선변경이 입력되면 동작함
-
         // 디버깅용
         //text.text = Time.time.ToString() + '\n' + unitMove.GetCurrentSpeed().speed.ToString();
     }
 
+    private void colliderChange()
+    {
+        normalCollider.SetActive(!normalCollider.activeSelf);
+        laneChangingCollider.SetActive(!laneChangingCollider.activeSelf);
+    }
+    
     // 차선변경을 시도하는 함수
     private void tryLaneChange()
     {
-        if (targetPosition != Vector3.zero) // 차선변경을 시도하면 targetPosition이 zero 가 아니게 됨
+        if (isLaneChanging == false)
         {
-            laneChange(); // 차선변경
+            colliderChange(); // 차선변경 시 콜라이더로 변경
+            //laneChange();
+            StartCoroutine(laneChangeCoroutine()); // 차선변경
         }
     }
 
-    // 차선변경을 하는 함수
+    // 차선변경을 하는 코루틴
+    IEnumerator laneChangeCoroutine()
+    {
+        Debug.Log("차선변경");
+        isSlideActivate = false; isKeyInputEnabled = false; // 이동이 끝날떄까지 입력을 막아둠
+        isLaneChanging = true;
+
+        float distance = Vector3.Distance(transform.position, targetPosition);
+
+        while (true)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * unitMove.GetCurrentSpeed().speed); // targetPosition으로 위치이동
+            targetPosition.z = transform.position.z; // 앞으로 이동중인걸 반영하기위해 z값을 업데이트해줌
+
+
+            if (distance <= 0.1f) // 타겟위치로 가까워졌으면
+            {
+                print("Stop");
+                transform.position = targetPosition;
+
+                yield return null;
+                break;
+            }
+
+        }
+        isLaneChanging = false; // 차선변경중 = false
+        isSlideActivate = true; // 다시 터치입력을 받도록 해줌
+        isKeyInputEnabled = true; // 다시 키입력을 받도록 해줌
+        colliderChange();
+    }
+
     private void laneChange()
     {
         if (Mathf.Abs(transform.position.x - targetPosition.x) >= 0.01) // targetPos와 0.01 이내로 가까워지기 전이라면
@@ -70,13 +123,15 @@ public class PlayerController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * unitMove.GetCurrentSpeed().speed); // targetPosition으로 위치이동
             targetPosition.z = transform.position.z; // 앞으로 이동중인걸 반영하기위해 z값을 업데이트해줌
         }
-        else // 이동이 끝났으면 
+        else
         {
-            targetPosition = Vector3.zero;
-
+            // 이동이 끝난 후 
+            isLaneChanging = false; // 차선변경중 = false
             isSlideActivate = true; // 다시 터치입력을 받도록 해줌
             isKeyInputEnabled = true; // 다시 키입력을 받도록 해줌
+            colliderChange(); // 콜라이더를 일반으로 변경
         }
+       
     }
 
     // 이동하려는 방향에 차선이 있는지 체크하는 함수
@@ -117,7 +172,7 @@ public class PlayerController : MonoBehaviour
 
                         changeTargetPosition(roadOffset);
 
-                        isSlideActivate = false; // 더이상 터치입력이 되지않도록 설정
+                        
                     }
                     else if (screenTouch.deltaPosition.x < -slideSensitivity && roadCheck("left")) // 좌로 슬라이드
                     {
@@ -125,7 +180,6 @@ public class PlayerController : MonoBehaviour
 
                         changeTargetPosition(-roadOffset);
 
-                        isSlideActivate = false; // 더이상 터치입력이 되지않도록 설정
                     }
                     else if (screenTouch.deltaPosition.y < 0)
                     {
@@ -149,14 +203,16 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("[키보드]왼쪽");
 
                 changeTargetPosition(-roadOffset);
-                isKeyInputEnabled = false; // 이동이 끝날떄까지 키입력을 멈춰둠
+                tryLaneChange();
+                
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) && roadCheck("right")) // 오른쪽 방향키 입력
             {
                 Debug.Log("[키보드]오른쪽");
 
                 changeTargetPosition(roadOffset);
-                isKeyInputEnabled = false;
+                tryLaneChange();
+                
             }
         }
     }
@@ -164,6 +220,11 @@ public class PlayerController : MonoBehaviour
     private void changeTargetPosition(Vector3 changeVector)
     {
         targetPosition = transform.position + changeVector;
+    }
+
+    private void playerDie()
+    {
+        // 게임오버 처리
     }
 
 }
