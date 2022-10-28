@@ -10,9 +10,15 @@ public class PlayerDieChecker : MonoBehaviour
     {
         playerController = transform.root.gameObject.GetComponent<PlayerController>();
     }
+
+    
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Unit")
+        if (other.tag == "Unit")
+        {
             playerController.playerDie();
+
+            Debug.Log("플레이어 사망");
+        }
     }
 }
