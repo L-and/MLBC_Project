@@ -7,8 +7,8 @@ public class BonusScoreChecker : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         string tag = other.tag;
-        
-        if(tag == "Unit")
+
+        if (tag == "Unit")
         {
             // 점수증가
         }
