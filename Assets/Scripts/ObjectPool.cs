@@ -43,6 +43,7 @@ public class ObjectPool : MonoBehaviour
             var obj = Instance.poolingObjectQueue.Dequeue();
             obj.transform.position = position;
             obj.gameObject.SetActive(true);
+            obj.transform.SetParent(null);
 
             return obj;
         }
