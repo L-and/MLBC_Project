@@ -22,10 +22,10 @@ public class ObjectGenerateManager : MonoBehaviour
         spawnAbleZPos = new float[roads.Length];
         for(int i = 0; i < roads.Length; i++)
         {
-            spawnAbleZPos[i] = roads[i].transform.position.z;
+            spawnAbleZPos[i] = roads[i].transform.localPosition.z;
         }
 
-        Debug.Log(spawnAbleZPos);
+        
     }
 
     private void Update()
