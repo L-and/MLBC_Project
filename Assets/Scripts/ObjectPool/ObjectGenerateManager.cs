@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class ObjectGenerateManager : MonoBehaviour
 {
-    public static ObjectGenerateManager Instance = null;
-
     private Transform playerTransform;
 
     // 오브젝트의 스폰을 위한 변수
-
-    
+    [SerializeField]
+    float objectSpawnDelay;
     [SerializeField]
     [Tooltip("오브젝트들간 스폰거리(플레이어 \"앞뒤길이 + 알파\"로 설정)")]
     float objectSpawnOffset;
@@ -29,22 +27,13 @@ public class ObjectGenerateManager : MonoBehaviour
     
     private bool spawning = true; // 코루틴을 사용해 일정시간마다 스폰하도록 함
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-
-    }
-
+    //
+    ObjectPool objectPool;
+    
     private void Start()
     {
+        objectPool = GetComponent<ObjectPool>();
+
         objectTransformQueue = new Queue<Transform>();
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
 
@@ -58,15 +47,16 @@ public class ObjectGenerateManager : MonoBehaviour
     private void Update()
     {
         if(spawning)
-            StartCoroutine(UnitSpawnCoroutine());
+            StartCoroutine(ObjectSpawnCoroutine());
+
     }
 
-    IEnumerator UnitSpawnCoroutine()
+    IEnumerator ObjectSpawnCoroutine()
     {
         while(true)
         {
             spawning = false;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(objectSpawnDelay);
             Vector3 spawnPos = new Vector3(
                         spawnAbleZPos[(int)Random.Range(0, spawnAbleZPos.Length)], // 차선위치에 맞게
                         0,
@@ -74,7 +64,7 @@ public class ObjectGenerateManager : MonoBehaviour
                         );
 
             spawnPos = SpawnPositionResetting(spawnPos); // 스폰위치가 적절하도록 재조정
-            objectTransformQueue.Enqueue(ObjectPool.GetObject(spawnPos).GetComponent<Transform>()); // 오브젝트를 생성하고 트랜스폼을를 트랜스폼큐에 추가
+            objectTransformQueue.Enqueue(objectPool.GetObject(spawnPos).GetComponent<Transform>()); // 오브젝트를 생성하고 트랜스폼을를 트랜스폼큐에 추가
 
             spawning = true;
         } 
@@ -93,18 +83,17 @@ public class ObjectGenerateManager : MonoBehaviour
 
             float distance = Vector3.Distance(tmpVectorA, tmpVectorB); // spawnPos와 스폰되어있는 오브젝트들간의 거리를 얻은 후 
 
-            Debug.Log(spawnPos.z);
-            Debug.Log(objectTransformQueue.ToArray()[index].localPosition.z);
-
-            if (distance < objectSpawnOffset) // unitSpawnOffset보다 가까운곳에 스폰될려하면 스폰위치 조정
+            if (distance < objectSpawnOffset) // objectSpawnOffset보다 가까운곳에 스폰될려하면 스폰위치 조정
                 return spawnPos + new Vector3(0, 0, distance);
         }
 
         return spawnPos;
     }
 
-    public static void UnitPosDequeue()
+    public void ObjectPosDequeue()
     {
-        Instance.objectTransformQueue.Dequeue();
+        objectTransformQueue.Dequeue();
     }
+
+
 }

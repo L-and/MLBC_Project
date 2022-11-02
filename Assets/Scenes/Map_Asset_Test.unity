@@ -1846,51 +1846,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154277667}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &162503308
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 162503310}
-  - component: {fileID: 162503309}
-  m_Layer: 0
-  m_Name: ObjectPoolManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &162503309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162503308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fcf2e794426b5249bff2bd0427e0daf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poolingObjectPrefab: {fileID: 5232560744518525328, guid: 688f8ddabcb261d48af1450acb4ffc64, type: 3}
---- !u!4 &162503310
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162503308}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.1765687, y: 11.789895, z: -8.603856}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &183530335
 GameObject:
   m_ObjectHideFlags: 0
@@ -6027,8 +5982,9 @@ GameObject:
   m_Component:
   - component: {fileID: 656038372}
   - component: {fileID: 656038371}
+  - component: {fileID: 656038373}
   m_Layer: 0
-  m_Name: ObjectGenerateManager
+  m_Name: ObjectPoolManager[Unit]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6046,9 +6002,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f4d3d9000f96d49869ab6925df0fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSpawnOffset: 0.75
-  unitSpawnRangeFar: 185
-  unitSpawnRangeNear: 225
+  objectSpawnOffset: 0
+  objectSpawnRangeFar: 0
+  objectSpawnRangeNear: 0
   roads:
   - {fileID: 84056303}
   - {fileID: 3589394155752045}
@@ -6065,8 +6021,21 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &656038373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656038370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcf2e794426b5249bff2bd0427e0daf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolingObjectPrefab: {fileID: 5232560744518525328, guid: 688f8ddabcb261d48af1450acb4ffc64, type: 3}
 --- !u!1 &665212965
 GameObject:
   m_ObjectHideFlags: 0
