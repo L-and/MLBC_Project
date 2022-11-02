@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
         if(playerTransform.position.z - 20 > transform.position.z)
         {
             ObjectPool.ReturnObject(gameObject);
-            UnitGenerateManager.UnitPosDequeue();
+            ObjectGenerateManager.UnitPosDequeue();
         }
     }
 }
