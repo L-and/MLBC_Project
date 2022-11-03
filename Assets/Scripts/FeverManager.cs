@@ -7,9 +7,18 @@ public class FeverManager : MonoBehaviour
 {
     public static FeverManager Instance = null; // 싱글톤
 
-    private static float feverValue;
+    private UnitMove unitMove; // 피버타임을 키기위한 컴포넌트변수
 
-    private static bool isFever;
+    private float feverValue;
+    private bool isFever;
+
+    [Tooltip("피버타임 지속시간")]
+    [SerializeField]
+    private float feverTimeSecond;
+
+    [Tooltip("피버점수 증가값")]
+    [SerializeField]
+    private float incrementalValue; // 피버 증가값
 
     private void Awake()
     {
@@ -24,32 +33,47 @@ public class FeverManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Start()
     {
+        unitMove = GameObject.Find("Player").GetComponent<UnitMove>();
+
         StartCoroutine(UpdateIsFeverCoroutine());
     }
 
     public static float GetFeverValue()
     {
-        return feverValue;
+        return Instance.feverValue;
     }
 
-    public static void AddFeverValue(float value)
+    public static void AddFeverValue()
     {
-        feverValue += value;
+        Instance.feverValue += Instance.incrementalValue;
     }
 
     IEnumerator UpdateIsFeverCoroutine()
     {
         while(true)
         {
-            if(feverValue >= 100.0f)
+            if (feverValue >= 100.0f)
             {
                 isFever = true;
+
+                unitMove.OnFeverMode();
                 Debug.Log("피버타임!");
 
-                yield return null;
+                yield return new WaitForSeconds(feverTimeSecond);
+
+                isFever = false;
+                unitMove.OffFeverMode();
+                feverValue = 0.0f;
+
+                isFever = false;
             }
+            yield return null;
         }
     }
+
+
+
+
 }

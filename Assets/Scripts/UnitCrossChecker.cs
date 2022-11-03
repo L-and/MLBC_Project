@@ -11,7 +11,7 @@ public class UnitCrossChecker : MonoBehaviour
 
         if (tag == "Unit")
         {
-            FeverManager.AddFeverValue(20.0f);
+            FeverManager.AddFeverValue();
         }
     }
 }

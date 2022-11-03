@@ -22,6 +22,10 @@ public class UnitMove : MonoBehaviour
     private Speed originalSpeed;
     [SerializeField]private Speed currentSpeed;
 
+    [Tooltip("피버콜라이더를 넣으시오")]
+    [SerializeField]
+    private GameObject feverCollider;
+
     // 컴포넌트 변수들
     private Rigidbody rigid;
     [SerializeField] private UnitChecker unitChecker;
@@ -84,6 +88,24 @@ public class UnitMove : MonoBehaviour
         {
             // 게임오버
         }
+    }
+
+    public void OnFeverMode()
+    {
+        feverCollider.SetActive(true);
+
+        currentSpeed.maxSpeed *= 2.0f;
+        currentSpeed.speed *= 2.0f;
+        currentSpeed.accuacceleration *= 2.0f;
+    }
+
+    public void OffFeverMode()
+    {
+        feverCollider.SetActive(false);
+
+        currentSpeed.maxSpeed /= 2.0f;
+        currentSpeed.speed /= 2.0f;
+        currentSpeed.accuacceleration /= 2.0f;
     }
 
     public Speed GetOriginalSpeed()

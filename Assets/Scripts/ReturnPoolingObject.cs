@@ -16,7 +16,7 @@ public class ReturnPoolingObject : MonoBehaviour
     {
         if(playerTransform.position.z - 5 > gameObject.transform.position.z)
         {
-            transform.parent.gameObject.GetComponent<ObjectPool>().ReturnObject(gameObject);
+            transform.parent.gameObject.GetComponent<ObjectPool>().ReturnObject(this.gameObject);
             transform.parent.gameObject.GetComponent<ObjectGenerateManager>().ObjectPosDequeue();
         }
     }
