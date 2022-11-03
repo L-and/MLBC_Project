@@ -94,7 +94,6 @@ public class PlayerController : MonoBehaviour
             float distance = Vector3.Distance(transform.position, targetPosition);
             if (distance <= 0.1f) // 타겟위치로 가까워졌으면
             {
-                print("Stop");
                 transform.position = targetPosition;
 
                 break;

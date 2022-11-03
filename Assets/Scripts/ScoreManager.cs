@@ -15,6 +15,9 @@ public class ScoreManager : MonoBehaviour
 
     public float intervalTime;
 
+    // 필요한 컴포넌트들
+    private UnitMove playerUnitMove;
+
     private void Awake()
     {
         if (Instance == null)
@@ -25,14 +28,24 @@ public class ScoreManager : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
-        }
-
+        }  
     }
 
     private void Start()
     {
+        //컴포넌트 할당
+        playerUnitMove = GameObject.Find("Player").GetComponent<UnitMove>();
+
         score = 0; // 점수 초기화
     }
 
-    
+    private void Update()
+    {
+        Instance.score += playerUnitMove.GetDistanceScore();
+    }
+
+    public static float GetDistanceScore()
+    {
+        return Instance.playerUnitMove.GetDistanceScore();
+    }
 }
