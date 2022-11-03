@@ -6183,9 +6183,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectSpawnDelay: 0.3
-  objectSpawnOffset: 100
+  objectSpawnOffset: 20
   objectSpawnRangeFar: 140
-  objectSpawnRangeNear: 5
+  objectSpawnRangeNear: 200
   roads:
   - {fileID: 84056303}
   - {fileID: 3589394155752045}
@@ -16209,9 +16209,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSpeed:
-    speed: 10
-    maxSpeed: 10
-    accuacceleration: 1
+    speed: 0
+    maxSpeed: 20
+    accuacceleration: 10
   feverCollider: {fileID: 419436140}
   unitChecker: {fileID: 0}
 --- !u!4 &7036331396003126337

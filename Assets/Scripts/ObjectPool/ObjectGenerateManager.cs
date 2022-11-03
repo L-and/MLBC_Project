@@ -63,9 +63,10 @@ public class ObjectGenerateManager : MonoBehaviour
                         playerTransform.position.z + Random.Range(objectSpawnRangeFar, objectSpawnRangeNear)// 플레이어z + 스폰범위중 랜덤
                         );
 
-            spawnPos = SpawnPositionResetting(spawnPos); // 스폰위치가 적절하도록 재조정
-            objectTransformQueue.Enqueue(objectPool.GetObject(spawnPos).GetComponent<Transform>()); // 오브젝트를 생성하고 트랜스폼을를 트랜스폼큐에 추가
-
+            if ((spawnPos = SpawnPositionResetting(spawnPos)) != Vector3.zero) // 스폰위치가 적절하도록 재조정
+            {
+                objectTransformQueue.Enqueue(objectPool.GetObject(spawnPos).GetComponent<Transform>()); // 오브젝트를 생성하고 트랜스폼을를 트랜스폼큐에 추가
+            }
             spawning = true;
         } 
     }
@@ -84,7 +85,7 @@ public class ObjectGenerateManager : MonoBehaviour
             float distance = Vector3.Distance(tmpVectorA, tmpVectorB); // spawnPos와 스폰되어있는 오브젝트들간의 거리를 얻은 후 
 
             if (distance < objectSpawnOffset) // objectSpawnOffset보다 가까운곳에 스폰될려하면 스폰위치 조정
-                return spawnPos + new Vector3(0, 0, distance);
+                return Vector3.zero;
         }
 
         return spawnPos;
