@@ -5,9 +5,6 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    // 디버깅용 변수들
-    public TextMeshProUGUI text;
-
     public GameObject[] roadChecker; // 차선변경 시 차선이 있는가 체크하는용도의 콜라이더
 
     // 도로간 offset을 얻기위한 변수
@@ -64,8 +61,6 @@ public class PlayerController : MonoBehaviour
         playerControllTouch(); // 플레이어 조작[터치]
         playerControllKeyboard(); // 플레이어 조작[키보드]
 
-        // 디버깅용
-        //text.text = Time.time.ToString() + '\n' + unitMove.GetCurrentSpeed().speed.ToString();
     }
 
     private void colliderChange()

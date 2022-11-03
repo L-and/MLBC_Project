@@ -34,29 +34,5 @@ public class ScoreManager : MonoBehaviour
         score = 0; // 점수 초기화
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (gameObject.tag == "Player")
-        {
-            if (other.gameObject.tag == "BusStation")
-            {
-                print("정류장 경유");
-                busStationCount++;
-
-                float currentTime = Time.time;
-                score = (stationScore * scoreMultiple) / (currentTime - intervalTime);
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (gameObject.tag == "Player")
-        {
-            if (other.gameObject.tag == "BusStation")
-            {
-                intervalTime = Time.time;
-            }
-        }
-    }
+    
 }
