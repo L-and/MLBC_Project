@@ -6182,9 +6182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f4d3d9000f96d49869ab6925df0fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSpawnOffset: 0
-  unitSpawnRangeFar: 0
-  unitSpawnRangeNear: 0
+  objectSpawnDelay: 0.3
+  objectSpawnOffset: 20
+  objectSpawnRangeFar: 140
+  objectSpawnRangeNear: 200
   roads:
   - {fileID: 84056303}
   - {fileID: 3589394155752045}
@@ -7419,9 +7420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f4d3d9000f96d49869ab6925df0fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSpawnOffset: 0
-  unitSpawnRangeFar: 0
-  unitSpawnRangeNear: 0
+  objectSpawnDelay: 5
+  objectSpawnOffset: 30
+  objectSpawnRangeFar: 50
+  objectSpawnRangeNear: 3
   roads:
   - {fileID: 1855277116}
 --- !u!4 &832009335
@@ -10311,7 +10313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1242898398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10337,9 +10339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f4d3d9000f96d49869ab6925df0fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSpawnOffset: 0
-  unitSpawnRangeFar: 0
-  unitSpawnRangeNear: 0
+  objectSpawnDelay: 1
+  objectSpawnOffset: 30
+  objectSpawnRangeFar: 50
+  objectSpawnRangeNear: 3
   roads:
   - {fileID: 84056303}
   - {fileID: 3589394155752045}
@@ -10659,7 +10662,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1299422437}
-  - component: {fileID: 1299422436}
   m_Layer: 0
   m_Name: FeverManager
   m_TagString: Untagged
@@ -10667,23 +10669,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1299422436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299422435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a01c2bc059c9e7547939c318efa089b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitMove: {fileID: 0}
-  feverValue: 0
-  isFever: 0
-  feverTimeSecond: 5
-  incrementalValue: 10
 --- !u!4 &1299422437
 Transform:
   m_ObjectHideFlags: 0
@@ -12363,7 +12348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1608132764
 Transform:
   m_ObjectHideFlags: 0
@@ -13486,7 +13471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1790210801
 Transform:
   m_ObjectHideFlags: 0
@@ -13556,6 +13541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceUI: {fileID: 907705322}
+  feverSlider: {fileID: 3448031}
 --- !u!4 &1805979404
 Transform:
   m_ObjectHideFlags: 0
@@ -16211,6 +16197,7 @@ MonoBehaviour:
     speed: 0
     maxSpeed: 20
     accuacceleration: 10
+  feverCollider: {fileID: 419436140}
   unitChecker: {fileID: 0}
 --- !u!4 &7036331396003126337
 Transform:
