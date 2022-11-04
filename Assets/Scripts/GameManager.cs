@@ -5,6 +5,8 @@ using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance = null; // 싱글톤패턴
+
     private GameObject[] unitGameObjects;
     private UnitMove[] unitMoves; // 모든 유닛들의 unitMove
     private UnitMove playerUnitMove;
@@ -23,6 +25,20 @@ public class GameManager : MonoBehaviour
             if (_isGameRunning == true)
                 activateComponents();
         }
+    }
+
+    private void Awake()
+    {
+       if(Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+       else
+        {
+            Destroy(this.gameObject);
+        }
+            
     }
 
     private void Start()

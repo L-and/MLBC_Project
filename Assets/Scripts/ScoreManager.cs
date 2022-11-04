@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    public static ScoreManager Instance = null; // 싱글톤패턴
+
     private int busStationCount; // 지나친 버스정류장의 수
 
     private float score; // 점수
@@ -13,34 +15,37 @@ public class ScoreManager : MonoBehaviour
 
     public float intervalTime;
 
+    // 필요한 컴포넌트들
+    private UnitMove playerUnitMove;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }  
+    }
+
     private void Start()
     {
+        //컴포넌트 할당
+        playerUnitMove = GameObject.Find("Player").GetComponent<UnitMove>();
+
         score = 0; // 점수 초기화
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (gameObject.tag == "Player")
-        {
-            if (other.gameObject.tag == "BusStation")
-            {
-                print("정류장 경유");
-                busStationCount++;
-
-                float currentTime = Time.time;
-                score = (stationScore * scoreMultiple) / (currentTime - intervalTime);
-            }
-        }
+        Instance.score += playerUnitMove.GetDistanceScore();
     }
 
-    private void OnTriggerExit(Collider other)
+    public static float GetDistanceScore()
     {
-        if (gameObject.tag == "Player")
-        {
-            if (other.gameObject.tag == "BusStation")
-            {
-                intervalTime = Time.time;
-            }
-        }
+        return Instance.playerUnitMove.GetDistanceScore();
     }
 }

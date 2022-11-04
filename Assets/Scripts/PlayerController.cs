@@ -5,9 +5,6 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    // 디버깅용 변수들
-    public TextMeshProUGUI text;
-
     public GameObject[] roadChecker; // 차선변경 시 차선이 있는가 체크하는용도의 콜라이더
 
     // 도로간 offset을 얻기위한 변수
@@ -64,8 +61,6 @@ public class PlayerController : MonoBehaviour
         playerControllTouch(); // 플레이어 조작[터치]
         playerControllKeyboard(); // 플레이어 조작[키보드]
 
-        // 디버깅용
-        //text.text = Time.time.ToString() + '\n' + unitMove.GetCurrentSpeed().speed.ToString();
     }
 
     private void colliderChange()
@@ -94,12 +89,11 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
             targetPosition.z = transform.position.z; // 앞으로 이동중인걸 반영하기위해 z값을 업데이트해줌
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime/* * unitMove.GetCurrentSpeed().speed*/); // targetPosition으로 위치이동
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * unitMove.GetCurrentSpeed().speed); // targetPosition으로 위치이동
 
             float distance = Vector3.Distance(transform.position, targetPosition);
             if (distance <= 0.1f) // 타겟위치로 가까워졌으면
             {
-                print("Stop");
                 transform.position = targetPosition;
 
                 break;

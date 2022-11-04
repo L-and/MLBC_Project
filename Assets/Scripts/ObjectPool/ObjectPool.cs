@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public static ObjectPool Instance; // 싱글톤 적용
-
     [SerializeField]
     private GameObject poolingObjectPrefab;
 
@@ -13,8 +11,6 @@ public class ObjectPool : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-
         Initialize(10);
     }
 
@@ -35,32 +31,34 @@ public class ObjectPool : MonoBehaviour
         return newObj;
     }
 
-    public static GameObject GetObject(Vector3 position) // 오브젝트를 사용
+    public GameObject GetObject(Vector3 position) // 오브젝트를 사용
     {
-        if (Instance.poolingObjectQueue.Count > 0)
+        Debug.Log("오브젝트 생성");
+        if (poolingObjectQueue.Count > 0)
         {
-            var obj = Instance.poolingObjectQueue.Dequeue();
+            var obj = poolingObjectQueue.Dequeue();
             obj.transform.position = position;
             obj.gameObject.SetActive(true);
+            obj.transform.SetParent(this.transform);
 
             return obj;
         }
         else
         {
-            var newObj = Instance.CreateNewObject();
+            var newObj = CreateNewObject();
             newObj.gameObject.SetActive(true);
-            newObj.transform.SetParent(null);
+            newObj.transform.SetParent(this.transform);
 
             return newObj;
         }
-        Debug.Log("오브젝트 풀링");
+        
     }
 
-    public static void ReturnObject(GameObject obj) // 오브젝트를 반환
+    public void ReturnObject(GameObject obj) // 오브젝트를 반환
     {
         obj.gameObject.SetActive(false);
-        obj.transform.SetParent(Instance.transform);
-        Instance.poolingObjectQueue.Enqueue(obj);
+        obj.transform.SetParent(transform);
+        poolingObjectQueue.Enqueue(obj);
 
         Debug.Log("오브젝트 풀링 리턴");
     }

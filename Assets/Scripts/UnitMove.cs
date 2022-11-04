@@ -7,7 +7,6 @@ public class UnitMove : MonoBehaviour
     [System.Serializable]
     public class Speed
     {
-
         public float speed; // 현재속도
         public float maxSpeed;// 최대속도
         public float accuacceleration; // 가속도
@@ -22,6 +21,10 @@ public class UnitMove : MonoBehaviour
 
     private Speed originalSpeed;
     [SerializeField]private Speed currentSpeed;
+
+    [Tooltip("피버콜라이더를 넣으시오")]
+    [SerializeField]
+    private GameObject feverCollider;
 
     // 컴포넌트 변수들
     private Rigidbody rigid;
@@ -87,6 +90,24 @@ public class UnitMove : MonoBehaviour
         }
     }
 
+    public void OnFeverMode()
+    {
+        feverCollider.SetActive(true);
+
+        currentSpeed.maxSpeed *= 2.0f;
+        currentSpeed.speed *= 2.0f;
+        currentSpeed.accuacceleration *= 2.0f;
+    }
+
+    public void OffFeverMode()
+    {
+        feverCollider.SetActive(false);
+
+        currentSpeed.maxSpeed /= 2.0f;
+        currentSpeed.speed /= 2.0f;
+        currentSpeed.accuacceleration /= 2.0f;
+    }
+
     public Speed GetOriginalSpeed()
     {
         return originalSpeed;
@@ -96,5 +117,12 @@ public class UnitMove : MonoBehaviour
     {
         return currentSpeed;
     }
+    
+    public float GetDistanceScore() // 플레이어의 진행거리를 반환
+    {
+        float distanceScore = 0;
+        distanceScore = gameObject.transform.position.z; // 플레이어의 위치는 0부터 시작하므로 z포지션이 진행거리
 
+        return distanceScore;
+    }
 }
