@@ -87,10 +87,8 @@ public class ObjectGenerateManager : MonoBehaviour
 
             float distance = Vector3.Distance(tmpVectorA, tmpVectorB); // spawnPos와 스폰되어있는 오브젝트들간의 거리를 얻은 후 
 
-            print(distance);
             if (distance < objectSpawnOffset) // objectSpawnOffset보다 가까운곳에 스폰될려하면 스폰위치 조정
             {
-
                 return Vector3.zero;
             }
         }
