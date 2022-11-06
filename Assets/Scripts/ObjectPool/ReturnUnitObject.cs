@@ -14,7 +14,7 @@ public class ReturnUnitObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerTransform.position.z - 5 > gameObject.transform.position.z)
+        if(playerTransform.position.z - 30 > gameObject.transform.position.z)
         {
             // 오브젝트풀에 이 오브젝트를 돌려줌
             transform.parent.gameObject.GetComponent<ObjectPool>().ReturnObject(this.gameObject);
