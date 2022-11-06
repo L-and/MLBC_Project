@@ -1,45 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// Road1과 Road2가 순환하면서 플레이어의 앞쪽으로 Transform이 바뀌며 무한히 도로가 생성되는 것 처럼 보이는 시스템
+// 맵들이 순환하며 반복하게 하는 스크립트
 public class MapCycleSystem : MonoBehaviour
 {
-    [SerializeField] private GameObject[] roads = new GameObject[2];
+    [SerializeField] private GameObject[] maps = new GameObject[2]; // 맵 오브젝트들을 저장
 
     private Transform playerTransform;
 
+    [Tooltip("플레이어 뒤로 cycleOffset만큼 오면 뒤의 도로를 앞으로 보내줌")]
     public int cycleOffset;
 
-    private float roadLength;
+    private float[] mapLengths; // 맵들의 길이를 저장
 
-    private int roadIndex = 1;
+    [Tooltip("다음맵의 인덱스로 지정")]
+    private int cycleIndex = 1;
 
     private void Start()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-        roadLength = roads[1].transform.position.z - roads[0].transform.position.z;
+
+        mapLengths = new float[maps.Length];
+        for(int i=0; i<maps.Length; i++)
+        {
+            mapLengths[i] = maps[i].transform.Find("EndPosition").GetComponent<Transform>().localPosition.z; // 맵들의 길이(z값)를 저장
+            print(mapLengths[i]);
+        }
+        
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         CycleRoad();
     }
 
-    private void CycleRoad()
+    private void CycleRoad() // 이전 맵을 현재 맵의 앞으로 이동시켜줌
     {
-
-        if(playerTransform.position.z - roads[roadIndex].transform.position.z > cycleOffset) // 플레이어의 뒤로 도로가 오면 앞으로 위치를 이동시켜줌
+        int lastIndex = cycleIndex % maps.Length;
+        int currentIndex = (cycleIndex + 1) % maps.Length;
+        if (playerTransform.position.z - cycleOffset > maps[lastIndex].transform.position.z)
         {
-            ChangeRoadIndex();
-            roads[roadIndex].transform.position += new Vector3(0, 0, roadLength);
+            // 이전맵의 위치를 현재맵의 위치 + 현재맵의 z길이 로 변경
+            maps[currentIndex].transform.position = maps[lastIndex].transform.position + new Vector3(0, 0, mapLengths[lastIndex]);
+            cycleIndex++;
+
         }
     }
 
-    private void ChangeRoadIndex()
-    {
-        if (roadIndex == 1)
-            roadIndex = 0;
-        else
-            roadIndex = 1;
-    }
 }

@@ -33,7 +33,6 @@ public class ObjectPool : MonoBehaviour
 
     public GameObject GetObject(Vector3 position) // 오브젝트를 사용
     {
-        Debug.Log("오브젝트 생성");
         if (poolingObjectQueue.Count > 0)
         {
             var obj = poolingObjectQueue.Dequeue();
@@ -59,8 +58,6 @@ public class ObjectPool : MonoBehaviour
         obj.gameObject.SetActive(false);
         obj.transform.SetParent(transform);
         poolingObjectQueue.Enqueue(obj);
-
-        Debug.Log("오브젝트 풀링 리턴");
     }
 
 }

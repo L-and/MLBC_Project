@@ -59,8 +59,6 @@ public class GameManager : MonoBehaviour
         playerUnitMove = gameObject.GetComponent<UnitMove>();
 
         playerController = gameObject.GetComponent<PlayerController>();
-
-        Debug.Log(gameObject.name);
     }
 
     private void activateComponents()
