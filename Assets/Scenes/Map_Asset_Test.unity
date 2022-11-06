@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7767,8 +7767,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roads:
-  - {fileID: 1608132763}
-  - {fileID: 1790210800}
+  - {fileID: 0}
+  - {fileID: 0}
   cycleOffset: 10
 --- !u!4 &898870302
 Transform:
@@ -10662,7 +10662,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1299422437}
-  - component: {fileID: 1299422436}
   m_Layer: 0
   m_Name: FeverManager
   m_TagString: Untagged
@@ -10670,20 +10669,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1299422436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299422435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a01c2bc059c9e7547939c318efa089b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  feverTimeSecond: 5
-  incrementalValue: 10
 --- !u!4 &1299422437
 Transform:
   m_ObjectHideFlags: 0
@@ -16145,8 +16130,8 @@ MonoBehaviour:
   - {fileID: 3589394155752045}
   isSlideActivate: 0
   slideSensitivity: 0
-  normalCollider: {fileID: 1385962615}
-  laneChangingCollider: {fileID: 648629857}
+  normalCollider: {fileID: 0}
+  laneChangingCollider: {fileID: 0}
 --- !u!54 &7036331395503809371
 Rigidbody:
   m_ObjectHideFlags: 0

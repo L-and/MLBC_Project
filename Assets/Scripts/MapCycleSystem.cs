@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 // Road1과 Road2가 순환하면서 플레이어의 앞쪽으로 Transform이 바뀌며 무한히 도로가 생성되는 것 처럼 보이는 시스템
-public class RoadCycleSystem : MonoBehaviour
+public class MapCycleSystem : MonoBehaviour
 {
     [SerializeField] private GameObject[] roads = new GameObject[2];
 
