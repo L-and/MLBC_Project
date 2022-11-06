@@ -44,7 +44,7 @@ public class ObjectPool : MonoBehaviour
     public GameObject GetObject(Vector3 position) // 오브젝트를 사용
     {
         int prefabIndex = (int)Random.Range(0, poolingObjectPrefabs.Length);
-        if (poolingObjectQueue.Count > 0)
+        if (poolingObjectQueue[poolingObjectPrefabs[prefabIndex].name].Count > 0)
         {
             var obj = poolingObjectQueue[poolingObjectPrefabs[prefabIndex].name].Dequeue();
             obj.transform.position = position;

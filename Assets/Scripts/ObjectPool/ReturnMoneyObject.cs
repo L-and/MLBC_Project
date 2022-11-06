@@ -16,7 +16,6 @@ public class ReturnMoneyObject : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            print("돈먹음!");
             MoneyManager.AddMoney(1);
 
             // 오브젝트풀에 이 오브젝트를 돌려줌

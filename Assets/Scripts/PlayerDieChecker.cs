@@ -16,6 +16,7 @@ public class PlayerDieChecker : MonoBehaviour
     {
         if (other.tag == "Unit")
         {
+            print("디짐");
             playerController.playerDie();
 
             Debug.Log("플레이어 사망");
