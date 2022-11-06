@@ -5,9 +5,9 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField]
-    private GameObject poolingObjectPrefab;
+    private GameObject[] poolingObjectPrefabs;
 
-    Queue<GameObject> poolingObjectQueue = new Queue<GameObject>();
+    private Dictionary<string, Queue<GameObject>> poolingObjectQueue = new Dictionary<string, Queue<GameObject>>();
 
     private void Awake()
     {
@@ -16,15 +16,25 @@ public class ObjectPool : MonoBehaviour
 
     private void Initialize(int initCount) // 오브젝트 초기화
     {
-        for (int i = 0; i < initCount; i++)
+        for (int i = 0; i < poolingObjectPrefabs.Length; i++)
         {
-            poolingObjectQueue.Enqueue(CreateNewObject());
+            for (int j = 0; j < initCount; j++)
+            {
+                if (!poolingObjectQueue.ContainsKey(poolingObjectPrefabs[i].name))
+                {
+                    Queue<GameObject> newQueue = new Queue<GameObject>();
+                    poolingObjectQueue.Add(poolingObjectPrefabs[i].name, newQueue);
+                }
+
+                poolingObjectQueue[poolingObjectPrefabs[i].name].Enqueue(CreateNewObject(i));
+            }
         }
     }
 
-    private GameObject CreateNewObject() // 풀링할 오브젝트를 생성
+    private GameObject CreateNewObject(int prefabIndex) // 풀링할 오브젝트를 생성
     {
-        var newObj = Instantiate(poolingObjectPrefab);
+        var newObj = Instantiate(poolingObjectPrefabs[prefabIndex]);
+        newObj.name = poolingObjectPrefabs[prefabIndex].name;
         newObj.gameObject.SetActive(false);
         newObj.transform.SetParent(transform);
 
@@ -33,9 +43,10 @@ public class ObjectPool : MonoBehaviour
 
     public GameObject GetObject(Vector3 position) // 오브젝트를 사용
     {
+        int prefabIndex = (int)Random.Range(0, poolingObjectPrefabs.Length);
         if (poolingObjectQueue.Count > 0)
         {
-            var obj = poolingObjectQueue.Dequeue();
+            var obj = poolingObjectQueue[poolingObjectPrefabs[prefabIndex].name].Dequeue();
             obj.transform.position = position;
             obj.gameObject.SetActive(true);
             obj.transform.SetParent(this.transform);
@@ -44,7 +55,7 @@ public class ObjectPool : MonoBehaviour
         }
         else
         {
-            var newObj = CreateNewObject();
+            var newObj = CreateNewObject(prefabIndex);
             newObj.gameObject.SetActive(true);
             newObj.transform.SetParent(this.transform);
 
@@ -57,7 +68,7 @@ public class ObjectPool : MonoBehaviour
     {
         obj.gameObject.SetActive(false);
         obj.transform.SetParent(transform);
-        poolingObjectQueue.Enqueue(obj);
+        poolingObjectQueue[obj.name].Enqueue(obj);
     }
 
 }

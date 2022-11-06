@@ -24,7 +24,6 @@ public class MapCycleSystem : MonoBehaviour
         for(int i=0; i<maps.Length; i++)
         {
             mapLengths[i] = maps[i].transform.Find("EndPosition").GetComponent<Transform>().localPosition.z; // 맵들의 길이(z값)를 저장
-            print(mapLengths[i]);
         }
         
     }

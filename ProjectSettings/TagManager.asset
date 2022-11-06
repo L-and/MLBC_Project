@@ -9,6 +9,7 @@ TagManager:
   - BusStation
   - Unit
   - Item
+  - Coin
   layers:
   - Default
   - TransparentFX

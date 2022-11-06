@@ -19,9 +19,12 @@ public class ObjectGenerateManager : MonoBehaviour
     [Tooltip("오브젝트들이 생성되는 플레이어와 최대거리")]
     private float objectSpawnRangeNear;
 
+    [SerializeField]
+    private float spawnYPos;
+
     [SerializeField] 
     private GameObject[] roads; // 도로들의 z값
-    private float[] spawnAbleZPos;
+    private float[] spawnAbleXPos;
 
     private Queue<Transform> objectTransformQueue; // 생성된 오브젝트들의 Transform을 담는 큐
     
@@ -37,10 +40,10 @@ public class ObjectGenerateManager : MonoBehaviour
         objectTransformQueue = new Queue<Transform>();
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
 
-        spawnAbleZPos = new float[roads.Length];
+        spawnAbleXPos = new float[roads.Length];
         for(int i = 0; i < roads.Length; i++)
         {
-            spawnAbleZPos[i] = roads[i].transform.localPosition.z; // 오브젝트가 스폰 될 ZPos값을 초기화
+            spawnAbleXPos[i] = roads[i].transform.position.x; // 오브젝트가 스폰 될 XPos값을 초기화
         }
     }
 
@@ -58,8 +61,8 @@ public class ObjectGenerateManager : MonoBehaviour
             spawning = false;
             yield return new WaitForSeconds(objectSpawnDelay);
             Vector3 spawnPos = new Vector3(
-                        spawnAbleZPos[(int)Random.Range(0, spawnAbleZPos.Length)], // 차선위치에 맞게
-                        0,
+                        spawnAbleXPos[(int)Random.Range(0, spawnAbleXPos.Length)], // 차선위치에 맞게
+                        spawnYPos,
                         playerTransform.position.z + Random.Range(objectSpawnRangeFar, objectSpawnRangeNear)// 플레이어z + 스폰범위중 랜덤
                         );
 
