@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 535283429853930928}
   - component: {fileID: 535283429853930942}
   - component: {fileID: 535283429853930940}
-  - component: {fileID: 535283429853930939}
   - component: {fileID: 535283429853930938}
   m_Layer: 0
   m_Name: Player
@@ -92,18 +91,6 @@ MonoBehaviour:
   slideSensitivity: 0
   normalCollider: {fileID: 7407198103413611154}
   laneChangingCollider: {fileID: 7407198104687937668}
---- !u!114 &535283429853930939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535283429853930937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f9ab3ee08e24a64fa972d1a843f0bc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &535283429853930938
 MonoBehaviour:
   m_ObjectHideFlags: 0
