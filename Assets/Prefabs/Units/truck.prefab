@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 7022514153840527088}
   - component: {fileID: 2103689608945111085}
   - component: {fileID: 8025951932722250704}
+  - component: {fileID: -3866939898919515813}
   m_Layer: 0
   m_Name: truck
   m_TagString: Unit
@@ -319,3 +320,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.2, y: 3.1619725, z: 7.145331}
   m_Center: {x: 0, y: 1.599267, z: -1.4882066}
+--- !u!114 &-3866939898919515813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655886021416000586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c4d2ac6dd738f439d50c9d9b818f44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSpeed:
+    speed: 10
+    maxSpeed: 10
+    accuacceleration: 10
+  feverCollider: {fileID: 0}
+  unitChecker: {fileID: 0}

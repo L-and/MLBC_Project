@@ -184,9 +184,10 @@ GameObject:
   - component: {fileID: 5180601689242314274}
   - component: {fileID: 38491760481301472}
   - component: {fileID: 7608661573684834800}
+  - component: {fileID: 5204310310483161831}
   m_Layer: 0
   m_Name: topcar
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,6 +235,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc007a9ff3fcc24fad09185fa89b42f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5204310310483161831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5525601617956830360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c4d2ac6dd738f439d50c9d9b818f44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSpeed:
+    speed: 10
+    maxSpeed: 10
+    accuacceleration: 10
+  feverCollider: {fileID: 0}
+  unitChecker: {fileID: 0}
 --- !u!1 &7533699797036090013
 GameObject:
   m_ObjectHideFlags: 0
