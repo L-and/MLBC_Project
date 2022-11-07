@@ -71,4 +71,23 @@ public class ObjectPool : MonoBehaviour
         poolingObjectQueue[obj.name].Enqueue(obj);
     }
 
+    public void ReturnAllObject() // 오브젝트풀링중인 오브젝트들을 모두 풀에 리턴해줌
+    {
+        int childIndex = 0;
+        for (int i = 0; i < (poolingObjectQueue.Count); i++)
+        {
+            for(int j=0; j < poolingObjectQueue[poolingObjectPrefabs[i].name].Count; j++)
+            {
+                GameObject childObject = transform.GetChild(childIndex).gameObject;
+                if (childObject.activeSelf == true)
+                {
+                    print(childObject.name);
+                    //transform.GetChild(childIndex).gameObject.name = childIndex.ToString();
+                    ReturnObject(childObject);
+                }
+                childIndex++;
+            }
+        }
+    }
+
 }

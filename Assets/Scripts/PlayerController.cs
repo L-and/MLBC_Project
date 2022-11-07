@@ -189,10 +189,4 @@ public class PlayerController : MonoBehaviour
     {
         targetPosition = transform.position + changeVector;
     }
-
-    public void playerDie()
-    {
-        Time.timeScale = 0;
-    }
-
 }

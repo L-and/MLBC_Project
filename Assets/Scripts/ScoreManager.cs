@@ -41,11 +41,11 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        Instance.score += playerUnitMove.GetDistanceScore();
+        Instance.score = playerUnitMove.GetDistanceScore();
     }
 
-    public static float GetDistanceScore()
+    public static float GetScore()
     {
-        return Instance.playerUnitMove.GetDistanceScore();
+        return Instance.score;
     }
 }

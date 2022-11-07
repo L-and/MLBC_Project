@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance = null; // 싱글톤패턴
 
+    private GameObject player;
+
     private UnitMove playerUnitMove;
 
     [SerializeField]
@@ -15,6 +17,8 @@ public class GameManager : MonoBehaviour
     private PlayerController playerController;
 
     private bool _isGameRunning = false; // 게임실행시 true
+
+    private Vector3 initPlayerPosition; // 다시하기를 위해 필요한 플레이어의 초기 위치
 
     public bool isGameRunning
     {
@@ -44,38 +48,52 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        GameObject player = GameObject.Find("Player");
+        player = GameObject.Find("Player");
         playerController = player.GetComponent<PlayerController>();
         playerUnitMove = player.GetComponent<UnitMove>();
+
+        initPlayerPosition = player.transform.position;
 
         DisableComponents();
     }
 
-    private void ActivateComponents()
+    public static void ActivateComponents()
     {
-        playerUnitMove.enabled = true;
+        Instance.playerUnitMove.enabled = true;
 
-        playerController.enabled = true;
+        Instance.playerController.enabled = true;
 
-        for(int i=0; i< objectPoolManagers.Length; i++)
+        for(int i=0; i< Instance.objectPoolManagers.Length; i++)
         {
-            objectPoolManagers[i].SetActive(true);
+            Instance.objectPoolManagers[i].gameObject.SetActive(true);
         }
     }
 
-    private void DisableComponents()
+    private static void DisableComponents()
     {
-        playerUnitMove.enabled = false;
+        Instance.playerUnitMove.enabled = false;
 
-        playerController.enabled = false;
+        Instance.playerController.enabled = false;
 
-        for (int i = 0; i < objectPoolManagers.Length; i++)
+        for (int i = 0; i < Instance.objectPoolManagers.Length; i++)
         {
-            objectPoolManagers[i].SetActive(false);
+            Instance.objectPoolManagers[i].GetComponent<ObjectPool>().ReturnAllObject();
+            Instance.objectPoolManagers[i].gameObject.SetActive(false);
         }
     }
 
+    public static void GameEnd()
+    {
+        UIManager.EnableEndUI();
+        DisableComponents();
+    }
 
+    public static void ResetGame() // 다시하기 누를 시 초기화면으로 리셋해줌
+    {
+        MapCycleSystem.ResetMapPosition(); // 맵들의 위치 재설정
+        Instance.player.transform.position = Instance.initPlayerPosition; // 플레이어 위치 재설정
+        UIManager.EnableMainUI(); // UI 재설정
+    }
 }
 
 
