@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < Instance.objectPoolManagers.Length; i++)
         {
-            Instance.objectPoolManagers[i].GetComponent<ObjectPool>().ReturnAllObject();
+            //Instance.objectPoolManagers[i].GetComponent<ObjectPool>().ReturnAllObject();
             Instance.objectPoolManagers[i].gameObject.SetActive(false);
         }
     }
@@ -88,11 +89,12 @@ public class GameManager : MonoBehaviour
         DisableComponents();
     }
 
-    public static void ResetGame() // 다시하기 누를 시 초기화면으로 리셋해줌
+    public static void ReloadGame() // 다시하기 누를 시 초기화면으로 리셋해줌
     {
-        MapCycleSystem.ResetMapPosition(); // 맵들의 위치 재설정
-        Instance.player.transform.position = Instance.initPlayerPosition; // 플레이어 위치 재설정
-        UIManager.EnableMainUI(); // UI 재설정
+        //MapCycleSystem.ResetMapPosition(); // 맵들의 위치 재설정
+        //Instance.player.transform.position = Instance.initPlayerPosition; // 플레이어 위치 재설정
+        //UIManager.EnableMainUI(); // UI 재설정
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
 

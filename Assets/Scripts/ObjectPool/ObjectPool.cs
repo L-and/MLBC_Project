@@ -66,28 +66,28 @@ public class ObjectPool : MonoBehaviour
 
     public void ReturnObject(GameObject obj) // 오브젝트를 반환
     {
-        obj.gameObject.SetActive(false);
-        obj.transform.SetParent(transform);
-        poolingObjectQueue[obj.name].Enqueue(obj);
+        obj.gameObject.SetActive(false); // 오브젝트를 비활성화
+        obj.transform.SetParent(transform); // 매니저 오브젝트를 부모로 설정
+        poolingObjectQueue[obj.name].Enqueue(obj); // 오브젝트를 큐에 다시넣어줌
+        gameObject.GetComponent<ObjectGenerateManager>().ObjectPosDequeue(); // ObjectGenerateManager의 ObjectPos큐를 비워줌
     }
 
-    public void ReturnAllObject() // 오브젝트풀링중인 오브젝트들을 모두 풀에 리턴해줌
-    {
-        int childIndex = 0;
-        for (int i = 0; i < (poolingObjectQueue.Count); i++)
-        {
-            for(int j=0; j < poolingObjectQueue[poolingObjectPrefabs[i].name].Count; j++)
-            {
-                GameObject childObject = transform.GetChild(childIndex).gameObject;
-                if (childObject.activeSelf == true)
-                {
-                    print(childObject.name);
-                    //transform.GetChild(childIndex).gameObject.name = childIndex.ToString();
-                    ReturnObject(childObject);
-                }
-                childIndex++;
-            }
-        }
-    }
+    //public void ReturnAllObject() // 오브젝트풀링중인 오브젝트들을 모두 풀에 리턴해줌
+    //{
+    //    int childIndex = 0;
+    //    for (int i = 0; i < (poolingObjectQueue.Count); i++)
+    //    {
+    //        for(int j=0; j < transform.childCount / poolingObjectQueue.Count; j++)
+    //        {
+    //            GameObject childObject = transform.GetChild(childIndex).gameObject;
+    //            if (childObject.activeSelf == true)
+    //            {
+    //                //transform.GetChild(childIndex).gameObject.name = childIndex.ToString();
+    //                ReturnObject(childObject);
+    //            }
+    //            childIndex++;
+    //        }
+    //    }
+    //}
 
 }

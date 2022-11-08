@@ -20,7 +20,6 @@ public class ReturnMoneyObject : MonoBehaviour
 
             // 오브젝트풀에 이 오브젝트를 돌려줌
             transform.parent.gameObject.GetComponent<ObjectPool>().ReturnObject(this.gameObject);
-            transform.parent.gameObject.GetComponent<ObjectGenerateManager>().ObjectPosDequeue();
         }
     }
 }
