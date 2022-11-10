@@ -81,7 +81,7 @@ public class ObjectGenerateManager : MonoBehaviour
             return spawnPos;
 
         Vector3 tmpVectorA = new Vector3(0.0f, 0.0f, spawnPos.z);
-        // 이미 스폰되어있는 오브젝트과 스폰할려는 위치가 충분한 거리를 두고있는지 검사
+        // 이미 스폰되어있는 오브젝트과 스폰할려는 위치가 충분한 거리를 두고있는지 검사(Z: SpawnOffset의 거리만큼 거리가 있는가?)
         for (int index = 0; index < objectTransformQueue.Count; index++)
         {
             Vector3 tmpVectorB = new Vector3(0.0f, 0.0f, objectTransformQueue.ToArray()[index].localPosition.z);
