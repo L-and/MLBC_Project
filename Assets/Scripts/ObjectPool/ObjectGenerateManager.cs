@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ObjectGenerateManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class ObjectGenerateManager : MonoBehaviour
     private float spawnYPos;
 
     [SerializeField] 
-    private GameObject[] roads; // 도로들의 z값
+    private GameObject[] roads; // 도로들의 X좌표를 얻기위해 선언
     private float[] spawnAbleXPos;
 
     private Queue<Transform> objectTransformQueue; // 생성된 오브젝트들의 Transform을 담는 큐
@@ -89,11 +90,35 @@ public class ObjectGenerateManager : MonoBehaviour
 
             if (distance < objectSpawnOffset) // objectSpawnOffset보다 가까운곳에 스폰될려하면 스폰위치 조정
             {
-                return Vector3.zero;
+                return FindEmptyPosition();
             }
         }
 
         return spawnPos;
+    }
+
+    private Vector3 FindEmptyPosition() // 현재 스폰된 오브젝트들 사이에서 스폰이 가능한 공간을 찾아 리턴 
+    {
+        Vector3 emptyPosition = new Vector3();
+
+        // 오브젝트 트랜스폼 큐를 포지션별로 정렬하기위해 포지션 벡터배열로 변환
+        Transform[] objectTransformArray = objectTransformQueue.ToArray();
+        Vector3[] objectPositionArray = new Vector3[objectTransformArray.Length];
+        for (int i = 0; i < objectPositionArray.Length; i++)
+        {
+            objectPositionArray[i] = objectTransformArray[i].position;
+        }
+
+        // 벡터를 z값으로 오름차순으로 정렬
+        objectPositionArray = objectPositionArray.OrderBy(v => v.z).ToArray<Vector3>();
+        
+        for(int i=1; i<objectPositionArray.Length; i++)
+        {
+            if ((objectPositionArray[i].z - objectPositionArray[i - 1].z) > objectSpawnOffset) // 오브젝트 사이간에 SpawnOffset만큼의 거리가 있는가?
+                return objectPositionArray[i - 1] + new Vector3(0, 0, objectSpawnOffset); // 거리가 있다면 그 사이로 위치지정
+        }
+
+        return objectPositionArray[objectPositionArray.Length - 1] + new Vector3(0, 0, objectSpawnOffset); // 없다면 제일 뒤의 오브젝트에 SpawnOffset을 추가하여 위치지정
     }
 
     public void ObjectPosDequeue()
