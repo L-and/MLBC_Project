@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance = null; // 싱글톤패턴
 
-    private GameObject[] unitGameObjects;
-    private UnitMove[] unitMoves; // 모든 유닛들의 unitMove
+    private GameObject player;
+
     private UnitMove playerUnitMove;
+
+    [SerializeField]
+    private GameObject[] objectPoolManagers;
 
     private PlayerController playerController;
 
     private bool _isGameRunning = false; // 게임실행시 true
+
+    private Vector3 initPlayerPosition; // 다시하기를 위해 필요한 플레이어의 초기 위치
 
     public bool isGameRunning
     {
@@ -23,7 +29,7 @@ public class GameManager : MonoBehaviour
             _isGameRunning = !_isGameRunning;
 
             if (_isGameRunning == true)
-                activateComponents();
+                ActivateComponents();
         }
     }
 
@@ -43,38 +49,53 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-///////////유니티 에디터/////////////
-# if UNITY_EDITOR
-        _isGameRunning = true;
-# endif
-//////////////////////////////////
-        unitGameObjects = GameObject.FindGameObjectsWithTag("Unit");
+        player = GameObject.Find("Player");
+        playerController = player.GetComponent<PlayerController>();
+        playerUnitMove = player.GetComponent<UnitMove>();
 
-        unitMoves = new UnitMove[unitGameObjects.Length];
+        initPlayerPosition = player.transform.position;
 
-        for (int i = 0; i < unitGameObjects.Length; i++)
-        {
-            unitMoves[i] = unitGameObjects[i].GetComponent<UnitMove>();
-        }
-        playerUnitMove = gameObject.GetComponent<UnitMove>();
-
-        playerController = gameObject.GetComponent<PlayerController>();
-
-        Debug.Log(gameObject.name);
+        DisableComponents();
     }
 
-    private void activateComponents()
+    public static void ActivateComponents()
     {
-        for (int i = 0; i < unitMoves.Length; i++)
-        {
-            unitMoves[i].enabled = true;
-        }
-        playerUnitMove.enabled = true;
+        Instance.playerUnitMove.enabled = true;
 
-        playerController.enabled = true;
+        Instance.playerController.enabled = true;
+
+        for(int i=0; i< Instance.objectPoolManagers.Length; i++)
+        {
+            Instance.objectPoolManagers[i].gameObject.SetActive(true);
+        }
     }
 
+    private static void DisableComponents()
+    {
+        Instance.playerUnitMove.enabled = false;
 
+        Instance.playerController.enabled = false;
+
+        for (int i = 0; i < Instance.objectPoolManagers.Length; i++)
+        {
+            //Instance.objectPoolManagers[i].GetComponent<ObjectPool>().ReturnAllObject();
+            Instance.objectPoolManagers[i].gameObject.SetActive(false);
+        }
+    }
+
+    public static void GameEnd()
+    {
+        UIManager.EnableEndUI();
+        DisableComponents();
+    }
+
+    public static void ReloadGame() // 다시하기 누를 시 초기화면으로 리셋해줌
+    {
+        //MapCycleSystem.ResetMapPosition(); // 맵들의 위치 재설정
+        //Instance.player.transform.position = Instance.initPlayerPosition; // 플레이어 위치 재설정
+        //UIManager.EnableMainUI(); // UI 재설정
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
 
 

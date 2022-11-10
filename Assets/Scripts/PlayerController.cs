@@ -81,7 +81,6 @@ public class PlayerController : MonoBehaviour
     // 차선변경을 하는 코루틴
     IEnumerator laneChangeCoroutine()
     {
-        Debug.Log("차선변경");
         isSlideActivate = false; isKeyInputEnabled = false; // 이동이 끝날떄까지 입력을 막아둠
         isLaneChanging = true;
 
@@ -173,16 +172,12 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow) && roadCheck("left")) // 왼쪽 방향키 입력
             {
-                Debug.Log("[키보드]왼쪽");
-
                 changeTargetPosition(-roadOffset);
                 tryLaneChange();
                 
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) && roadCheck("right")) // 오른쪽 방향키 입력
             {
-                Debug.Log("[키보드]오른쪽");
-
                 changeTargetPosition(roadOffset);
                 tryLaneChange();
                 
@@ -194,10 +189,4 @@ public class PlayerController : MonoBehaviour
     {
         targetPosition = transform.position + changeVector;
     }
-
-    public void playerDie()
-    {
-        Time.timeScale = 0;
-    }
-
 }
