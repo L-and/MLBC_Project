@@ -56,6 +56,7 @@ public class ObjectPool : MonoBehaviour
         else
         {
             var newObj = CreateNewObject(prefabIndex);
+            newObj.transform.position = position;
             newObj.gameObject.SetActive(true);
             newObj.transform.SetParent(this.transform);
 
