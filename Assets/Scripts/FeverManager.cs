@@ -68,8 +68,11 @@ public class FeverManager : MonoBehaviour
                 unitMove.OnFeverMode();
                 Debug.Log("피버타임!");
 
-                yield return new WaitForSeconds(feverTimeSecond);
+                yield return new WaitForSeconds(feverTimeSecond - 3.0f);
+                UIManager.Instance.StartBlinkFeverUI(); // 피버가 끝나기 2초전에 UI를 깜빡여줌
+                yield return new WaitForSeconds(3.0f);
 
+                UIManager.Instance.StopBlinkFeverUI();
                 isFever = false;
 
                 feverCollider.SetActive(false);

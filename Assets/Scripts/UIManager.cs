@@ -16,6 +16,9 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI distanceUI;
     [SerializeField]
     private Slider feverSlider;
+    [SerializeField]
+    private GameObject feverSliderFill; // 피버 슬라이더 아래의 FIll 오브젝트로 선택
+
 
     [SerializeField]
     private TextMeshProUGUI scoreText;
@@ -28,6 +31,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject EndUI;
+
+    IEnumerator blinkCoroutine = BlinkFeverSliderCoroutine();
 
     private void Awake()
     {
@@ -82,5 +87,27 @@ public class UIManager : MonoBehaviour
         SetScoreTextOnEndUI(); // 플레이에 사용되는 오브젝트 비활성화
 
         Instance.EndUI.SetActive(true); // 종료화면UI 활성화
+    }
+
+    public void StartBlinkFeverUI()
+    {
+        StartCoroutine(blinkCoroutine);
+        print("UI깜빡임 시작");
+    }
+
+    public void StopBlinkFeverUI()
+    {
+        StopCoroutine(blinkCoroutine);
+    }
+
+    static IEnumerator BlinkFeverSliderCoroutine()
+    {
+        while (true)
+        {
+            Instance.feverSliderFill.SetActive(false);
+            yield return new WaitForSeconds(.3f);
+            Instance.feverSliderFill.SetActive(true);
+            yield return new WaitForSeconds(.3f);
+        }
     }
 }
