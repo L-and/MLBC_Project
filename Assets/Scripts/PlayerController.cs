@@ -175,11 +175,11 @@ public class PlayerController : MonoBehaviour
                         tryLaneChange();
 
                     }
-                    else if (screenTouch.deltaPosition.y < 0)
-                    {
-                        Debug.Log("[브레이크]");
-                        unitMove.GetCurrentSpeed().speed -= 0.1f;
-                    }
+                    //if (screenTouch.deltaPosition.y < slideSensitivity)
+                    //{
+                    //    unitMove.GetCurrentSpeed().speed -= 0.5f;
+                    //    isSlideTouchInputEnabled = true; isKeyInputEnabled = true;
+                    //}
                 }
             }
         }
