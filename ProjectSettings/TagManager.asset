@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - EndPoint
+  - Road
+  - BusStation
+  - Unit
+  - Item
+  - Coin
+  - Camera
   layers:
   - Default
   - TransparentFX

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7355216229610069099}
   - component: {fileID: 1306404508910243157}
   - component: {fileID: 6855289857420936582}
+  - component: {fileID: 4529441358317039953}
   m_Layer: 0
   m_Name: Bus Station
   m_TagString: Untagged
@@ -98,6 +99,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4529441358317039953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6414827335430683387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffc007a9ff3fcc24fad09185fa89b42f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8606186569398304843
 GameObject:
   m_ObjectHideFlags: 0
