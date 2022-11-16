@@ -11,7 +11,7 @@ public class FeverCollider : MonoBehaviour
     {
         if(other.tag == "Unit")
         {
-            ScoreManager.AddScore(10.0f);
+            ScoreManager.AddFeverScore(50.0f);
             unitObjectPool.ReturnObject(other.gameObject);
         }
     }
