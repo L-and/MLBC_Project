@@ -4,43 +4,61 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    public static ScoreManager Instance = null; // 싱글톤패턴
+
     private int busStationCount; // 지나친 버스정류장의 수
 
     private float score; // 점수
+    private float distanceScore; // 거리점수
+    private float feverScore; // 피버점수
     public float stationScore; // 정류장 점수
 
     public float scoreMultiple; // 점수 배율
 
     public float intervalTime;
 
+    // 필요한 컴포넌트들
+    private UnitMove playerUnitMove;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }  
+    }
+
     private void Start()
     {
+        //컴포넌트 할당
+        playerUnitMove = GameObject.Find("Player").GetComponent<UnitMove>();
+
         score = 0; // 점수 초기화
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (gameObject.tag == "Player")
-        {
-            if (other.gameObject.tag == "BusStation")
-            {
-                print("정류장 경유");
-                busStationCount++;
-
-                float currentTime = Time.time;
-                score = (stationScore * scoreMultiple) / (currentTime - intervalTime);
-            }
-        }
+        UpdateScore();
     }
 
-    private void OnTriggerExit(Collider other)
+    private void UpdateScore()
     {
-        if (gameObject.tag == "Player")
-        {
-            if (other.gameObject.tag == "BusStation")
-            {
-                intervalTime = Time.time;
-            }
-        }
+        Instance.distanceScore = playerUnitMove.GetDistanceScore();
+        Instance.score = Instance.distanceScore + Instance.feverScore;
+    }
+
+    public static float GetScore()
+    {
+        return Instance.score;
+    }
+
+    public static void AddFeverScore(float value)
+    {
+        Instance.feverScore += value;
     }
 }

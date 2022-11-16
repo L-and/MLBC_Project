@@ -7,7 +7,6 @@ public class UnitMove : MonoBehaviour
     [System.Serializable]
     public class Speed
     {
-
         public float speed; // 현재속도
         public float maxSpeed;// 최대속도
         public float accuacceleration; // 가속도
@@ -85,7 +84,20 @@ public class UnitMove : MonoBehaviour
         {
             // 게임오버
         }
+    }
 
+    public void OnFeverMode()
+    {
+        currentSpeed.maxSpeed *= 2.0f;
+        currentSpeed.speed *= 2.0f;
+        currentSpeed.accuacceleration *= 2.0f;
+    }
+
+    public void OffFeverMode()
+    {
+        currentSpeed.maxSpeed /= 2.0f;
+        currentSpeed.speed /= 2.0f;
+        currentSpeed.accuacceleration /= 2.0f;
     }
 
     public Speed GetOriginalSpeed()
@@ -97,5 +109,12 @@ public class UnitMove : MonoBehaviour
     {
         return currentSpeed;
     }
+    
+    public float GetDistanceScore() // 플레이어의 진행거리를 반환
+    {
+        float distanceScore = 0;
+        distanceScore = gameObject.transform.position.z; // 플레이어의 위치는 0부터 시작하므로 z포지션이 진행거리
 
+        return distanceScore;
+    }
 }

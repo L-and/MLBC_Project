@@ -8,6 +8,9 @@ TagManager:
   - Road
   - BusStation
   - Unit
+  - Item
+  - Coin
+  - Camera
   layers:
   - Default
   - TransparentFX
