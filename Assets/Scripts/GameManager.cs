@@ -64,10 +64,11 @@ public class GameManager : MonoBehaviour
 
         Instance.playerController.enabled = true;
 
-        //for(int i=0; i< Instance.objectPoolManagers.Length; i++)
-        //{
-        //    Instance.objectPoolManagers[i].gameObject.SetActive(true);
-        //}
+        for(int i=0; i< Instance.objectPoolManagers.Length; i++)
+        {
+            Instance.objectPoolManagers[i].gameObject.SetActive(true);
+            Instance.objectPoolManagers[i].gameObject.GetComponent<ObjectGenerateManager>().ChangeObjectSpawnRangeNear();
+        }
     }
 
     private static void DisableComponents()
@@ -76,13 +77,12 @@ public class GameManager : MonoBehaviour
 
         Instance.playerController.enabled = false;
 
-        //for (int i = 0; i < Instance.objectPoolManagers.Length; i++)
-        //{
-        //    //Instance.objectPoolManagers[i].GetComponent<ObjectPool>().ReturnAllObject();
-        //    Instance.objectPoolManagers[i].gameObject.SetActive(false);
-        //}
+        for (int i = 0; i < Instance.objectPoolManagers.Length; i++)
+        {
+            //Instance.objectPoolManagers[i].GetComponent<ObjectPool>().ReturnAllObject();
+            Instance.objectPoolManagers[i].gameObject.SetActive(false);
+        }
     }
-
 
     public static void GameEnd()
     {
