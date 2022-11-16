@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject feverSliderFill; // 피버 슬라이더 아래의 FIll 오브젝트로 선택
 
+    float blinkDelay; // 슬라이드UI가 깜빡임이 빨라질떄 사용하는 변수
 
     [SerializeField]
     private TextMeshProUGUI scoreText;
@@ -98,16 +99,20 @@ public class UIManager : MonoBehaviour
     public void StopBlinkFeverUI()
     {
         StopCoroutine(blinkCoroutine);
+        Instance.feverSliderFill.SetActive(true);
+        Instance.blinkDelay = 0.3f;
     }
 
     static IEnumerator BlinkFeverSliderCoroutine()
     {
+        Instance.blinkDelay = 0.3f;
         while (true)
         {
             Instance.feverSliderFill.SetActive(false);
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(Instance.blinkDelay);
             Instance.feverSliderFill.SetActive(true);
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(Instance.blinkDelay);
+            Instance.blinkDelay -= 0.04f;
         }
     }
 }
