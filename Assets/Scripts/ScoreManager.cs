@@ -48,4 +48,9 @@ public class ScoreManager : MonoBehaviour
     {
         return Instance.score;
     }
+
+    public static void AddScore(float value)
+    {
+        Instance.score += value;
+    }
 }
