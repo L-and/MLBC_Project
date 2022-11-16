@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
         for(int i=0; i< Instance.objectPoolManagers.Length; i++)
         {
             Instance.objectPoolManagers[i].gameObject.SetActive(true);
+            Instance.objectPoolManagers[i].gameObject.GetComponent<ObjectGenerateManager>().ChangeObjectSpawnRangeNear();
         }
     }
 

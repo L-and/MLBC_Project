@@ -16,9 +16,15 @@ public class ObjectGenerateManager : MonoBehaviour
     [SerializeField]
     [Tooltip("오브젝트들이 생성되는 플레이어와 최소거리(화면밖에서 생성되게 해야함)")]
     private float objectSpawnRangeFar;
-    [SerializeField]
     [Tooltip("오브젝트들이 생성되는 플레이어와 최대거리")]
     private float objectSpawnRangeNear;
+
+    [SerializeField]
+    [Tooltip("메인화면에서 오브젝트들이 생성되는 플레이어와 최대거리")]
+    private float objectSpawnRangeNearOnMain;
+    [SerializeField]
+    [Tooltip("게임화면에서 오브젝트들이 생성되는 플레이어와 최대거리")]
+    private float objectSpawnRangeNearOnGame;
 
     [SerializeField]
     private float spawnYPos;
@@ -46,6 +52,8 @@ public class ObjectGenerateManager : MonoBehaviour
         {
             spawnAbleXPos[i] = roads[i].transform.position.x; // 오브젝트가 스폰 될 XPos값을 초기화
         }
+
+        objectSpawnRangeNear = objectSpawnRangeNearOnMain;
     }
 
     private void Update()
@@ -53,6 +61,11 @@ public class ObjectGenerateManager : MonoBehaviour
         if(spawning)
             StartCoroutine(ObjectSpawnCoroutine());
 
+    }
+
+    public void ChangeObjectSpawnRangeNear()
+    {
+        objectSpawnRangeNear = objectSpawnRangeNearOnGame;
     }
 
     IEnumerator ObjectSpawnCoroutine()
@@ -64,7 +77,7 @@ public class ObjectGenerateManager : MonoBehaviour
             Vector3 spawnPos = new Vector3(
                         spawnAbleXPos[(int)Random.Range(0, spawnAbleXPos.Length)], // 차선위치에 맞게
                         spawnYPos,
-                        playerTransform.position.z + Random.Range(objectSpawnRangeFar, objectSpawnRangeNear)// 플레이어z + 스폰범위중 랜덤
+                        playerTransform.position.z + Random.Range(objectSpawnRangeNear, objectSpawnRangeFar)// 플레이어z + 스폰범위중 랜덤
                         );
 
             if ((spawnPos = SpawnPositionResetting(spawnPos)) != Vector3.zero) // 스폰위치가 적절하도록 재조정
