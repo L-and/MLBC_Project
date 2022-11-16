@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     // 슬라이드입력 관련 변수
     public bool isSlideTouchInputEnabled; // 슬라이드를 한번할때 차선을 1칸만 움직이기 위한 변수
     public float slideSensitivity; // 슬라이드 민감도
-
+    [SerializeField]
+    private float laneChangeSpeed; // 차선변경속도
     // 키보드입력 관련 변수
     private bool isKeyInputEnabled;
 
@@ -104,7 +105,7 @@ public class PlayerController : MonoBehaviour
         {
             targetPosition.z = transform.position.z; // 앞으로 이동중인걸 반영하기위해 z값을 업데이트해줌
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * unitMove.GetCurrentSpeed().speed); // targetPosition으로 위치이동
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, laneChangeSpeed * Time.deltaTime); // targetPosition으로 위치이동
 
             float distance = Vector3.Distance(transform.position, targetPosition);
             if (distance <= 0.1f) // 타겟위치로 가까워졌으면
