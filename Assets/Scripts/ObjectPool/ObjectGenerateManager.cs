@@ -99,26 +99,58 @@ public class ObjectGenerateManager : MonoBehaviour
 
     private Vector3 FindEmptyPosition() // 현재 스폰된 오브젝트들 사이에서 스폰이 가능한 공간을 찾아 리턴 
     {
-        Vector3 emptyPosition = new Vector3();
-
         // 오브젝트 트랜스폼 큐를 포지션별로 정렬하기위해 포지션 벡터배열로 변환
         Transform[] objectTransformArray = objectTransformQueue.ToArray();
-        Vector3[] objectPositionArray = new Vector3[objectTransformArray.Length];
-        for (int i = 0; i < objectPositionArray.Length; i++)
+        List<Vector3> objectPositionList = new List<Vector3>();
+        Vector3[] objectPositionArray;
+
+        for (int i = 0; i < objectTransformArray.Length; i++) // 플레이어와 SpawnRangeNear 만큼 떨어진 Transform부터 포지션에 저장
         {
-            objectPositionArray[i] = objectTransformArray[i].position;
+            if (objectTransformArray[i].position.z - playerTransform.position.z > objectSpawnRangeNear)
+            {
+                objectPositionList.Add(objectTransformArray[i].position);
+            }
         }
 
         // 벡터를 z값으로 오름차순으로 정렬
-        objectPositionArray = objectPositionArray.OrderBy(v => v.z).ToArray<Vector3>();
+        objectPositionArray = objectPositionList.OrderBy(v => v.z).ToArray<Vector3>();
         
-        for(int i=1; i<objectPositionArray.Length; i++)
+        for(int i=1; i< objectPositionArray.Length; i++)
         {
             if ((objectPositionArray[i].z - objectPositionArray[i - 1].z) > objectSpawnOffset) // 오브젝트 사이간에 SpawnOffset만큼의 거리가 있는가?
-                return objectPositionArray[i - 1] + new Vector3(0, 0, objectSpawnOffset); // 거리가 있다면 그 사이로 위치지정
+                return new Vector3(roads[(int)Random.Range(0, 3)].transform.position.x, objectPositionArray[i - 1].y, objectPositionArray[i - 1].z + objectSpawnOffset / 2); // 거리가 있다면 그 사이로 위치지정
         }
 
-        return objectPositionArray[objectPositionArray.Length - 1] + new Vector3(0, 0, objectSpawnOffset); // 없다면 제일 뒤의 오브젝트에 SpawnOffset을 추가하여 위치지정
+        int nearSpawnObjectCnt = 0; // 현재 오브젝트주변에 스폰해있는 오브젝트가 몇개인지?
+        List<float> spawnedXPosition = new List<float>(); // 이미 스폰된 오브젝트들의 x값들
+        for(int i=1; i<objectPositionArray.Length-1; i++)
+        {
+            spawnedXPosition.Add(objectPositionArray[i].x);
+            if (objectPositionArray[i].z - objectPositionArray[i - 1].z < objectSpawnOffset) // 스폰간격보다 오브젝트들의 간격이 좁다면
+            {
+                spawnedXPosition.Add(objectPositionArray[i-1].x);
+                nearSpawnObjectCnt++;
+            }
+            if (objectPositionArray[i+1].z - objectPositionArray[i].z < objectSpawnOffset)
+            {
+                spawnedXPosition.Add(objectPositionArray[i+1].x);
+                nearSpawnObjectCnt++;
+            }
+
+            if (nearSpawnObjectCnt < 2) // 주변에 스폰가능한 도로가 있다면 = 주변에 스폰된 오브젝트가 2개 미만이라면
+            {
+                while(true)
+                {
+                    int index = (int)Random.Range(0, 3);
+                    if (!spawnedXPosition.Exists(x => Mathf.Abs(x - roads[index].transform.position.x) < 0.01f)) // 다른 오브젝트가 없는 도로라면
+                    {
+                        return new Vector3(roads[index].transform.position.x, objectPositionArray[i].y, objectPositionArray[i].z);
+                    }
+                }
+            }
+        }
+
+        return new Vector3(roads[(int)Random.Range(0,3)].transform.position.x, 0, objectPositionArray[objectPositionArray.Length - 1].z + objectSpawnOffset); // 없다면 제일 뒤의 오브젝트에 도로는 랜덤으로 SpawnOffset을 추가하여 위치지정
     }
 
     public void ObjectPosDequeue()

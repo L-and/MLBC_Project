@@ -65,8 +65,22 @@ public class PlayerController : MonoBehaviour
 
     private void colliderChange()
     {
+        if(FeverManager.isFever == false)
+        {
         normalCollider.SetActive(!normalCollider.activeSelf);
         laneChangingCollider.SetActive(!laneChangingCollider.activeSelf);
+        }
+        else if(FeverManager.isFever == true)
+        {
+            normalCollider.SetActive(false);
+            laneChangingCollider.SetActive(false);
+        }
+    }
+
+    public void colliderReset()
+    {
+        normalCollider.SetActive(true);
+        laneChangingCollider.SetActive(false);
     }
 
     // 차선변경을 시도하는 함수
@@ -131,39 +145,44 @@ public class PlayerController : MonoBehaviour
     // 차선변경[터치]
     private void playerControllTouch()
     {
-        if (Input.touchCount == 1) // 터치가 입력됨
+        if (isKeyInputEnabled)
         {
-            Touch screenTouch = Input.GetTouch(0); //터치의 정보를받아 screenTouch에 저장
-            print(screenTouch.phase);
 
-                
-            if (screenTouch.phase == TouchPhase.Moved && isSlideTouchInputEnabled == true) // 슬라이드 했을때
+
+            if (Input.touchCount == 1) // 터치가 입력됨
             {
-                isSlideTouchInputEnabled = false; // 터치입력을 막아둠
+                Touch screenTouch = Input.GetTouch(0); //터치의 정보를받아 screenTouch에 저장
+                print(screenTouch.phase);
 
-                if (screenTouch.deltaPosition.x > slideSensitivity && roadCheck("right")) // 우로 슬라이드
+
+                if (screenTouch.phase == TouchPhase.Moved && isSlideTouchInputEnabled == true) // 슬라이드 했을때
                 {
-                    changeTargetPosition(roadOffset);
-                    tryLaneChange();
+                    isSlideTouchInputEnabled = false; // 터치입력을 막아둠
+
+                    if (screenTouch.deltaPosition.x > slideSensitivity && roadCheck("right")) // 우로 슬라이드
+                    {
+                        changeTargetPosition(roadOffset);
+                        tryLaneChange();
 
 
-                }
-                else if (screenTouch.deltaPosition.x < -slideSensitivity && roadCheck("left")) // 좌로 슬라이드
-                {
-                    changeTargetPosition(-roadOffset);
-                    tryLaneChange();
+                    }
+                    else if (screenTouch.deltaPosition.x < -slideSensitivity && roadCheck("left")) // 좌로 슬라이드
+                    {
+                        changeTargetPosition(-roadOffset);
+                        tryLaneChange();
 
+                    }
+                    else if (screenTouch.deltaPosition.y < 0)
+                    {
+                        Debug.Log("[브레이크]");
+                        unitMove.GetCurrentSpeed().speed -= 0.1f;
+                    }
                 }
-                else if (screenTouch.deltaPosition.y < 0)
-                {
-                    Debug.Log("[브레이크]");
-                    unitMove.GetCurrentSpeed().speed -= 0.1f;
-                }
+
+                if (screenTouch.phase == TouchPhase.Ended) // 터치가 끝나면
+                    isSlideTouchInputEnabled = true;
+
             }
-
-            if (screenTouch.phase == TouchPhase.Ended) // 터치가 끝나면
-                isSlideTouchInputEnabled = true;
-
         }
         
     }
