@@ -145,19 +145,21 @@ public class PlayerController : MonoBehaviour
     // 차선변경[터치]
     private void playerControllTouch()
     {
-        if (isKeyInputEnabled)
+        if (isKeyInputEnabled) // 차선 변경중에 차선변경을 시도하지않도록 입력가능 검사
         {
-
+            if(Input.touchCount == 0) // 터치를 하고있지 않으면
+            {
+                print("슬라이드 가능!");
+                isSlideTouchInputEnabled = true; // 슬라이드입력을 다시 허용해줌
+            }
 
             if (Input.touchCount == 1) // 터치가 입력됨
             {
                 Touch screenTouch = Input.GetTouch(0); //터치의 정보를받아 screenTouch에 저장
-                print(screenTouch.phase);
 
-
-                if (screenTouch.phase == TouchPhase.Moved && isSlideTouchInputEnabled == true) // 슬라이드 했을때
+                if (screenTouch.phase == TouchPhase.Moved && isSlideTouchInputEnabled) // 슬라이드 했을때
                 {
-                    isSlideTouchInputEnabled = false; // 터치입력을 막아둠
+                    isSlideTouchInputEnabled = false; // 슬라이드입력을 막아둠
 
                     if (screenTouch.deltaPosition.x > slideSensitivity && roadCheck("right")) // 우로 슬라이드
                     {
@@ -178,10 +180,6 @@ public class PlayerController : MonoBehaviour
                         unitMove.GetCurrentSpeed().speed -= 0.1f;
                     }
                 }
-
-                if (screenTouch.phase == TouchPhase.Ended) // 터치가 끝나면
-                    isSlideTouchInputEnabled = true;
-
             }
         }
         
