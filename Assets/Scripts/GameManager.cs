@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject[] objectPoolManagers;
 
+    [SerializeField]
+    private ObjectGenerateManager unitGenerateManager;
+
     private PlayerController playerController;
 
     private bool _isGameRunning = false; // 게임실행시 true
@@ -67,8 +70,9 @@ public class GameManager : MonoBehaviour
         for(int i=0; i< Instance.objectPoolManagers.Length; i++)
         {
             Instance.objectPoolManagers[i].gameObject.SetActive(true);
-            Instance.objectPoolManagers[i].gameObject.GetComponent<ObjectGenerateManager>().ChangeObjectSpawnRangeNear();
         }
+
+        Instance.unitGenerateManager.ChangeObjectSpawnRangeNear();
     }
 
     private static void DisableComponents()
