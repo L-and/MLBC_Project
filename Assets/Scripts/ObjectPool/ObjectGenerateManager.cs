@@ -149,8 +149,8 @@ public class ObjectGenerateManager : MonoBehaviour
                 }
             }
         }
-
-        return new Vector3(roads[(int)Random.Range(0,3)].transform.position.x, 0, objectPositionArray[objectPositionArray.Length - 1].z + objectSpawnOffset); // 없다면 제일 뒤의 오브젝트에 도로는 랜덤으로 SpawnOffset을 추가하여 위치지정
+        return Vector3.zero;
+        //return new Vector3(roads[(int)Random.Range(0,3)].transform.position.x, 0, objectPositionArray[objectPositionArray.Length - 1].z + objectSpawnOffset); // 없다면 제일 뒤의 오브젝트에 도로는 랜덤으로 SpawnOffset을 추가하여 위치지정
     }
 
     public void ObjectPosDequeue()
