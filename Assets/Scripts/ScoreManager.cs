@@ -61,4 +61,17 @@ public class ScoreManager : MonoBehaviour
     {
         Instance.feverScore += value;
     }
+
+    public void SaveMaxScore() // 최고점수를 저장
+    {
+        if(Instance.score > PlayerPrefs.GetFloat("Score"))
+        {
+            PlayerPrefs.SetFloat("Score", Instance.score);
+        }
+    }
+
+    public float GetMaxScore()
+    {
+        return PlayerPrefs.GetFloat("Score");
+    }
 }
