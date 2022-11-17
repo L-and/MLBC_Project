@@ -101,6 +101,11 @@ public class GameManager : MonoBehaviour
         //UIManager.EnableMainUI(); // UI 재설정
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public static void GameExit() // 게임종료
+    {
+        Application.Quit();
+    }
 }
 
 

@@ -66,12 +66,14 @@ public class PlayerController : MonoBehaviour
 
     private void colliderChange()
     {
-        if(FeverManager.isFever == false)
+        if(FeverManager.Instance.isFever == false)
         {
         normalCollider.SetActive(!normalCollider.activeSelf);
         laneChangingCollider.SetActive(!laneChangingCollider.activeSelf);
+            print(!normalCollider.activeSelf);
+            print(!laneChangingCollider.activeSelf);
         }
-        else if(FeverManager.isFever == true)
+        else if(FeverManager.Instance.isFever == true)
         {
             normalCollider.SetActive(false);
             laneChangingCollider.SetActive(false);
