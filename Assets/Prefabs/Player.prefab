@@ -87,8 +87,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  isSlideActivate: 0
-  slideSensitivity: 0
+  isSlideTouchInputEnabled: 1
+  slideSensitivity: 1
+  laneChangeSpeed: 1
   normalCollider: {fileID: 7407198103413611154}
   laneChangingCollider: {fileID: 7407198104687937668}
 --- !u!114 &535283429853930938
@@ -107,7 +108,6 @@ MonoBehaviour:
     speed: 0
     maxSpeed: 20
     accuacceleration: 4
-  feverCollider: {fileID: 7407198104597188745}
   unitChecker: {fileID: 0}
 --- !u!1 &535283430360324769
 GameObject:
@@ -524,8 +524,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.9, y: 4.57, z: 13}
-  m_Center: {x: 0, y: 1.7, z: -0.25}
+  m_Size: {x: 3.9, y: 4.57, z: 17.171926}
+  m_Center: {x: 0, y: 1.7, z: -0.3194971}
 --- !u!114 &7407198103413611167
 MonoBehaviour:
   m_ObjectHideFlags: 0
