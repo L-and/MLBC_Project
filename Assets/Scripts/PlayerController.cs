@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     // 키보드입력 관련 변수
     private bool isKeyInputEnabled;
 
+    // 모바일 좌, 우 터치를 구분하기위한 화면중앙x값
+    private float screenCenterValueX;
+
     // 차선이동을 위한 변수
     private Vector3 targetPosition; // 이동할 위치
     private bool isLaneChanging; // 현재 차선이 변경중인지를 저장
@@ -54,12 +57,15 @@ public class PlayerController : MonoBehaviour
             normalCollider.SetActive(true);
             laneChangingCollider.SetActive(false);
         }
+
+        screenCenterValueX = Screen.width / 2;
     }
 
 
     private void Update()
     {
         playerControllTouch(); // 플레이어 조작[터치]
+        //playerControllSlide(); // 플레이어 조작[슬라이드]
         playerControllKeyboard(); // 플레이어 조작[키보드]
 
     }
@@ -147,6 +153,41 @@ public class PlayerController : MonoBehaviour
 
     // 차선변경[터치]
     private void playerControllTouch()
+    {
+        if (isKeyInputEnabled) // 차선 변경중에 차선변경을 시도하지않도록 입력가능 검사
+        {
+
+            if (Input.touchCount == 1) // 터치가 입력됨
+            {
+                Touch screenTouch = Input.GetTouch(0); //터치의 정보를받아 screenTouch에 저장
+
+                if (screenTouch.phase == TouchPhase.Began && isSlideTouchInputEnabled) // 터치 했을때
+                {
+                    if (screenTouch.position.x > screenCenterValueX && roadCheck("right")) // 우로 슬라이드
+                    {
+                        changeTargetPosition(roadOffset);
+                        tryLaneChange();
+
+
+                    }
+                    else if (screenTouch.position.x < screenCenterValueX && roadCheck("left")) // 좌로 슬라이드
+                    {
+                        changeTargetPosition(-roadOffset);
+                        tryLaneChange();
+
+                    }
+                    //if (screenTouch.deltaPosition.y < slideSensitivity)
+                    //{
+                    //    unitMove.GetCurrentSpeed().speed -= 0.5f;
+                    //    isSlideTouchInputEnabled = true; isKeyInputEnabled = true;
+                    //}
+                }
+            }
+        }
+    }
+
+    // 차선변경[슬라이드]
+    private void playerControllSlide()
     {
         if (isKeyInputEnabled) // 차선 변경중에 차선변경을 시도하지않도록 입력가능 검사
         {
