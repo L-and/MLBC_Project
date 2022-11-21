@@ -206,6 +206,16 @@ public class PlayerController : MonoBehaviour
 
             }
         }
+
+        if (Input.GetKey(KeyCode.DownArrow) && unitMove.GetCurrentSpeed().speed > 0) // 현재속도가 0보다 클떄 브레이크
+        {
+            unitMove.GetCurrentSpeed().accuacceleration = -unitMove.GetCurrentSpeed().breakPower;
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow)) // 브레이크 키 땔때 가속도 복원
+        {
+            unitMove.GetCurrentSpeed().accuacceleration = unitMove.GetOriginalSpeed().accuacceleration;
+        }
     }
 
     private void changeTargetPosition(Vector3 changeVector)

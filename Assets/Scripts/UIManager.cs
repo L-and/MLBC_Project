@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI scoreText; // EndUI의 점수텍스트
     [SerializeField]
     private TextMeshProUGUI maxScoreText; // 최고점수 UI
+    [SerializeField]
+    private TextMeshProUGUI maxScoreTextMain; // 메인화면 최고점수 UI
 
     [SerializeField]
     private GameObject MainUI;
@@ -53,6 +55,8 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        Instance.maxScoreTextMain.text = "최고점수: " + ((int)ScoreManager.Instance.GetMaxScore()).ToString(); // 최고점수 로딩 후 텍스트로 띄워줌
     }
 
     // Update is called once per frame
