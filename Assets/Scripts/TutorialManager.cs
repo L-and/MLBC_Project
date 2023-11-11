@@ -14,7 +14,7 @@ public class TutorialManager : MonoBehaviour
     GameManager gameManager;
 
     private void Start()
-    {
+    {   
         // 튜토리얼 시작 시 방향키 가이드 출력
         showControllGuide();
     }
@@ -33,8 +33,6 @@ public class TutorialManager : MonoBehaviour
     {
         descriptionText.text = "좌, 우 방향키로 좌우 이동";
 
-        Time.timeScale = 0f;
-
         tutorialUIObject.SetActive(true);
     }
 
@@ -49,6 +47,10 @@ public class TutorialManager : MonoBehaviour
 
     public void hideTutorialUI()
     {
+        // 플레이어 이동 컴포넌트 비활성화 시 활성화
+        if(gameManager.isGameRunning == false)
+            gameManager.isGameRunning = true;
+
         tutorialUIObject.SetActive(false);
     }
 }

@@ -57,12 +57,13 @@ public class GameManager : MonoBehaviour
         playerUnitMove = player.GetComponent<UnitMove>();
 
         initPlayerPosition = player.transform.position;
-
+        Debug.Log(Instance.playerController);
         DisableComponents();
     }
 
     public static void ActivateComponents()
     {
+        
         Instance.playerUnitMove.enabled = true;
 
         Instance.playerController.enabled = true;
