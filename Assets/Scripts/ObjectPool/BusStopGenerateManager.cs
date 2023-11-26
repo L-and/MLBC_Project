@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class BusStopGenerateManager : MonoBehaviour
+public class BusStopGeneratemanager : MonoBehaviour
 {
     private Transform playerTransform;
 
@@ -29,17 +29,17 @@ public class BusStopGenerateManager : MonoBehaviour
     [SerializeField]
     private float spawnYPos;
 
-    [SerializeField] 
-    private GameObject[] roads; // 도로들의 X좌표를 얻기위해 선언
+    [SerializeField]
+    private GameObject[] spawnPositions; // 스폰위치의 X좌표를 얻기위해 선언
     private float[] spawnAbleXPos;
 
     private Queue<Transform> objectTransformQueue; // 생성된 오브젝트들의 Transform을 담는 큐
-    
+
     private bool spawning = true; // 코루틴을 사용해 일정시간마다 스폰하도록 함
 
     //
     ObjectPool objectPool;
-    
+
     private void Start()
     {
         objectPool = GetComponent<ObjectPool>();
@@ -47,10 +47,10 @@ public class BusStopGenerateManager : MonoBehaviour
         objectTransformQueue = new Queue<Transform>();
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
 
-        spawnAbleXPos = new float[roads.Length];
-        for(int i = 0; i < roads.Length; i++)
+        spawnAbleXPos = new float[spawnPositions.Length];
+        for (int i = 0; i < spawnPositions.Length; i++)
         {
-            spawnAbleXPos[i] = roads[i].transform.position.x; // 오브젝트가 스폰 될 XPos값을 초기화
+            spawnAbleXPos[i] = spawnPositions[i].transform.position.x; // 오브젝트가 스폰 될 XPos값을 초기화
         }
 
         objectSpawnRangeNear = objectSpawnRangeNearOnMain;
@@ -58,7 +58,7 @@ public class BusStopGenerateManager : MonoBehaviour
 
     private void Update()
     {
-        if(spawning)
+        if (spawning)
             StartCoroutine(ObjectSpawnCoroutine());
 
     }
@@ -70,12 +70,13 @@ public class BusStopGenerateManager : MonoBehaviour
 
     IEnumerator ObjectSpawnCoroutine()
     {
-        while(true)
+        while (true)
         {
             spawning = false;
             yield return new WaitForSeconds(objectSpawnDelay);
+
             Vector3 spawnPos = new Vector3(
-                        spawnAbleXPos[(int)Random.Range(0, spawnAbleXPos.Length)], // 차선위치에 맞게
+                        spawnAbleXPos[(int)Random.Range(0, spawnAbleXPos.Length)], // 스폰가능한 x좌표중 랜덤으로 스폰
                         spawnYPos,
                         playerTransform.position.z + Random.Range(objectSpawnRangeNear, objectSpawnRangeFar)// 플레이어z + 스폰범위중 랜덤
                         );
@@ -85,7 +86,7 @@ public class BusStopGenerateManager : MonoBehaviour
                 objectTransformQueue.Enqueue(objectPool.GetObject(spawnPos).GetComponent<Transform>()); // 오브젝트를 생성하고 트랜스폼을를 트랜스폼큐에 추가
             }
             spawning = true;
-        } 
+        }
     }
 
     private Vector3 SpawnPositionResetting(Vector3 spawnPos) // 오브젝트사이로 플레이어가 지나갈수 있도록 스폰되게 SpawnPos를 재설정
@@ -99,7 +100,8 @@ public class BusStopGenerateManager : MonoBehaviour
         {
             Vector3 tmpVectorB = new Vector3(0.0f, 0.0f, objectTransformQueue.ToArray()[index].localPosition.z);
 
-            float distance = Vector3.Distance(tmpVectorA, tmpVectorB); // spawnPos와 스폰되어있는 오브젝트들간의 거리를 얻은 후 
+            float distance = Vector3.Distance(tmpVectorA, tmpVectorB); // spawnPos와 스폰되어있는 오브젝트들간의 거리를 얻은 후
+            Debug.Log("distance: " + distance);
 
             if (distance < objectSpawnOffset) // objectSpawnOffset보다 가까운곳에 스폰될려하면 스폰위치 조정
             {
@@ -126,38 +128,41 @@ public class BusStopGenerateManager : MonoBehaviour
         }
 
         // 벡터를 z값으로 오름차순으로 정렬
+
         objectPositionArray = objectPositionList.OrderBy(v => v.z).ToArray<Vector3>();
-        
-        for(int i=1; i< objectPositionArray.Length; i++)
+        Debug.Log("len" + objectPositionArray.Length);
+
+        for (int i = 1; i < objectPositionArray.Length; i++)
         {
+            Debug.Log(i);
             if ((objectPositionArray[i].z - objectPositionArray[i - 1].z) > objectSpawnOffset) // 오브젝트 사이간에 SpawnOffset만큼의 거리가 있는가?
-                return new Vector3(roads[(int)Random.Range(0, 3)].transform.position.x, objectPositionArray[i - 1].y, objectPositionArray[i - 1].z + objectSpawnOffset / 2); // 거리가 있다면 그 사이로 위치지정
+                return new Vector3(spawnPositions[(int)Random.Range(0, spawnPositions.Length)].transform.position.x, objectPositionArray[i - 1].y, objectPositionArray[i - 1].z + objectSpawnOffset / 2); // 거리가 있다면 그 사이로 위치지정
         }
 
         int nearSpawnObjectCnt = 0; // 현재 오브젝트주변에 스폰해있는 오브젝트가 몇개인지?
         List<float> spawnedXPosition = new List<float>(); // 이미 스폰된 오브젝트들의 x값들
-        for(int i=1; i<objectPositionArray.Length-1; i++)
+        for (int i = 1; i < objectPositionArray.Length - 1; i++)
         {
             spawnedXPosition.Add(objectPositionArray[i].x);
             if (objectPositionArray[i].z - objectPositionArray[i - 1].z < objectSpawnOffset) // 스폰간격보다 오브젝트들의 간격이 좁다면
             {
-                spawnedXPosition.Add(objectPositionArray[i-1].x);
+                spawnedXPosition.Add(objectPositionArray[i - 1].x);
                 nearSpawnObjectCnt++;
             }
-            if (objectPositionArray[i+1].z - objectPositionArray[i].z < objectSpawnOffset)
+            if (objectPositionArray[i + 1].z - objectPositionArray[i].z < objectSpawnOffset)
             {
-                spawnedXPosition.Add(objectPositionArray[i+1].x);
+                spawnedXPosition.Add(objectPositionArray[i + 1].x);
                 nearSpawnObjectCnt++;
             }
 
             if (nearSpawnObjectCnt < 2) // 주변에 스폰가능한 도로가 있다면 = 주변에 스폰된 오브젝트가 2개 미만이라면
             {
-                while(true)
+                while (true)
                 {
                     int index = (int)Random.Range(0, 3);
-                    if (!spawnedXPosition.Exists(x => Mathf.Abs(x - roads[index].transform.position.x) < 0.01f)) // 다른 오브젝트가 없는 도로라면
+                    if (!spawnedXPosition.Exists(x => Mathf.Abs(x - spawnPositions[index].transform.position.x) < 0.01f)) // 다른 오브젝트가 없는 도로라면
                     {
-                        return new Vector3(roads[index].transform.position.x, objectPositionArray[i].y, objectPositionArray[i].z);
+                        return new Vector3(spawnPositions[index].transform.position.x, objectPositionArray[i].y, objectPositionArray[i].z);
                     }
                 }
             }
