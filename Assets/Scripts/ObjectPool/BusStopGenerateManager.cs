@@ -75,6 +75,7 @@ public class BusStopGeneratemanager : MonoBehaviour
             spawning = false;
             yield return new WaitForSeconds(objectSpawnDelay);
 
+
             Vector3 spawnPos = new Vector3(
                         spawnAbleXPos[(int)Random.Range(0, spawnAbleXPos.Length)], // 스폰가능한 x좌표중 랜덤으로 스폰
                         spawnYPos,

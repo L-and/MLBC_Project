@@ -13,7 +13,7 @@ public class ScoreManager : MonoBehaviour
     private float feverScore; // 피버점수
     private float busStopScore; // 정류장 점수
 
-    public int busStopScoreValue = 10000; // 정류장을 지나칠 시 얻는 점수
+    // public int busStopScoreValue = 10000; // 정류장을 지나칠 시 얻는 점수
 
     public float scoreMultiple; // 점수 배율
 
@@ -64,9 +64,9 @@ public class ScoreManager : MonoBehaviour
         Instance.feverScore += value;
     }
 
-    public static void AddBusStopScore()
+    public static void AddBusStopScore(float value)
     {
-        Instance.busStopScore += Instance.busStopScoreValue;
+        Instance.busStopScore += value;
     }
 
     public void SaveMaxScore() // 최고점수를 저장

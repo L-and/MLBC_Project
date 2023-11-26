@@ -70,7 +70,8 @@ public class ObjectPool : MonoBehaviour
         obj.gameObject.SetActive(false); // 오브젝트를 비활성화
         obj.transform.SetParent(transform); // 매니저 오브젝트를 부모로 설정
         poolingObjectQueue[obj.name].Enqueue(obj); // 오브젝트를 큐에 다시넣어줌
-        gameObject.GetComponent<ObjectGenerateManager>().ObjectPosDequeue(); // ObjectGenerateManager의 ObjectPos큐를 비워줌
+        if(gameObject.GetComponent<ObjectGenerateManager>() != null)
+            gameObject.GetComponent<ObjectGenerateManager>().ObjectPosDequeue(); // ObjectGenerateManager의 ObjectPos큐를 비워줌
     }
 
     //public void ReturnAllObject() // 오브젝트풀링중인 오브젝트들을 모두 풀에 리턴해줌

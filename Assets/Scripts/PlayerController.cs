@@ -70,8 +70,6 @@ public class PlayerController : MonoBehaviour
         {
         normalCollider.SetActive(!normalCollider.activeSelf);
         laneChangingCollider.SetActive(!laneChangingCollider.activeSelf);
-            print(!normalCollider.activeSelf);
-            print(!laneChangingCollider.activeSelf);
         }
         else if(FeverManager.Instance.isFever == true)
         {
@@ -152,7 +150,6 @@ public class PlayerController : MonoBehaviour
         {
             if(Input.touchCount == 0) // 터치를 하고있지 않으면
             {
-                print("슬라이드 가능!");
                 isSlideTouchInputEnabled = true; // 슬라이드입력을 다시 허용해줌
             }
 
