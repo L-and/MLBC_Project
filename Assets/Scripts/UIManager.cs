@@ -22,7 +22,11 @@ public class UIManager : MonoBehaviour
     float blinkDelay; // 슬라이드UI가 깜빡임이 빨라질떄 사용하는 변수
 
     [SerializeField]
-    private TextMeshProUGUI scoreText;
+    private TextMeshProUGUI scoreText; // EndUI의 점수텍스트
+    [SerializeField]
+    private TextMeshProUGUI maxScoreText; // 최고점수 UI
+    [SerializeField]
+    private TextMeshProUGUI maxScoreTextMain; // 메인화면 최고점수 UI
 
     [SerializeField]
     private GameObject MainUI;
@@ -51,6 +55,8 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        Instance.maxScoreTextMain.text = "최고점수: " + ((int)ScoreManager.Instance.GetMaxScore()).ToString(); // 최고점수 로딩 후 텍스트로 띄워줌
     }
 
     // Update is called once per frame
@@ -70,10 +76,6 @@ public class UIManager : MonoBehaviour
         feverSlider.value = FeverManager.GetFeverValue();
     }
 
-    private static void SetScoreTextOnEndUI()
-    {
-        Instance.scoreText.text = ((int)ScoreManager.GetScore()).ToString();
-    }
 
     public static void EnableMainUI()
     {   
@@ -84,8 +86,11 @@ public class UIManager : MonoBehaviour
 
     public static void EnableEndUI()
     {
+        ScoreManager.Instance.SaveMaxScore(); // 최고점수 저장
+        Instance.maxScoreText.text = "최고점수: "+((int)ScoreManager.Instance.GetMaxScore()).ToString(); // 최고점수 로딩 후 텍스트로 띄워줌
+        Instance.scoreText.text = "내 점수: "+((int)ScoreManager.GetScore()).ToString();
+
         Instance.InGameUI.SetActive(false); // 인게임 UI 비활성화
-        SetScoreTextOnEndUI(); // 플레이에 사용되는 오브젝트 비활성화
 
         Instance.EndUI.SetActive(true); // 종료화면UI 활성화
     }

@@ -10,33 +10,35 @@ public class UnitMove : MonoBehaviour
         public float speed; // 현재속도
         public float maxSpeed;// 최대속도
         public float accuacceleration; // 가속도
+        public float breakPower; // 브레이크 파워
 
-        public Speed(float speed, float maxSpeed, float accuacceleration)
+        public Speed(float speed, float maxSpeed, float accuacceleration, float breakPower)
         {
             this.speed = speed; 
             this.maxSpeed = maxSpeed;
             this.accuacceleration = accuacceleration;
+            this.breakPower = breakPower;
         }
     }
 
-    private Speed originalSpeed;
+    [SerializeField]private Speed originalSpeed;
     [SerializeField]private Speed currentSpeed;
 
     // 컴포넌트 변수들
-    private Rigidbody rigid;
     [SerializeField] private UnitChecker unitChecker;
 
     private void Start()
     {
-        originalSpeed = currentSpeed;
-
-        rigid = gameObject.GetComponent<Rigidbody>();
+        originalSpeed.speed = currentSpeed.speed;
+        originalSpeed.accuacceleration = currentSpeed.accuacceleration;
+        originalSpeed.maxSpeed = currentSpeed.maxSpeed;
+        originalSpeed.breakPower = currentSpeed.breakPower;
     }
 
     void Update()
     {
         moveForward(); // 전진이동
-        maxSpeedLock();
+        speedLock();
     }
 
     // 버스를 앞으로 이동시키는 함수
@@ -47,32 +49,37 @@ public class UnitMove : MonoBehaviour
         transform.position += Vector3.forward * currentSpeed.speed * Time.deltaTime;
     }
 
-    public void ChangeSpeedWithOtherUnit(GameObject otherUnit) // 유닛앞에 다른 유닛이 있을 때 최대속도변경함수
+    //public void ChangeSpeedWithOtherUnit(GameObject otherUnit) // 유닛앞에 다른 유닛이 있을 때 최대속도변경함수
+    //{
+    //        if (otherUnit != null)
+    //        {
+    //            UnitMove otherUnitMove = otherUnit.GetComponent<UnitMove>();
+
+    //            // 다른 유닛의 속도값으로 변경해줌
+    //            if (currentSpeed.speed > otherUnitMove.currentSpeed.speed) // 이 유닛이 다른 유닛보다 속도가 빠를경우
+    //            currentSpeed.speed = otherUnitMove.currentSpeed.speed; // 다른 유닛의 속도로 변경
+
+    //            currentSpeed.accuacceleration = otherUnitMove.currentSpeed.accuacceleration;
+    //            currentSpeed.maxSpeed = otherUnitMove.currentSpeed.maxSpeed;
+    //        }
+    //        else if (otherUnit == null)
+    //        {
+    //            // 원래의 속도값들로 변경해줌
+    //            currentSpeed.accuacceleration = originalSpeed.accuacceleration;
+    //            currentSpeed.maxSpeed = originalSpeed.maxSpeed;
+    //        }
+    //}
+
+    private void speedLock()
     {
-            if (otherUnit != null)
-            {
-                UnitMove otherUnitMove = otherUnit.GetComponent<UnitMove>();
-
-                // 다른 유닛의 속도값으로 변경해줌
-                if (currentSpeed.speed > otherUnitMove.currentSpeed.speed) // 이 유닛이 다른 유닛보다 속도가 빠를경우
-                currentSpeed.speed = otherUnitMove.currentSpeed.speed; // 다른 유닛의 속도로 변경
-
-                currentSpeed.accuacceleration = otherUnitMove.currentSpeed.accuacceleration;
-                currentSpeed.maxSpeed = otherUnitMove.currentSpeed.maxSpeed;
-            }
-            else if (otherUnit == null)
-            {
-                // 원래의 속도값들로 변경해줌
-                currentSpeed.accuacceleration = originalSpeed.accuacceleration;
-                currentSpeed.maxSpeed = originalSpeed.maxSpeed;
-            }
-    }
-
-    private void maxSpeedLock()
-    {
-        if(currentSpeed.speed > currentSpeed.maxSpeed)
+        if(currentSpeed.speed > currentSpeed.maxSpeed) // MaxSpeed
         {
             currentSpeed.speed = currentSpeed.maxSpeed;
+        }
+
+        if(currentSpeed.speed <= 10) // 스피드가 0 이하로 안떨어지게
+        {
+            currentSpeed.speed = 10;
         }
     }
 

@@ -11,7 +11,7 @@ public class FeverManager : MonoBehaviour
     private PlayerController playerController; // 콜라이더를 키고 끄기위한 컴포넌트
 
     private float feverValue;
-    public static bool isFever;
+    public bool isFever;
 
     [Tooltip("피버타임 지속시간")]
     [SerializeField]

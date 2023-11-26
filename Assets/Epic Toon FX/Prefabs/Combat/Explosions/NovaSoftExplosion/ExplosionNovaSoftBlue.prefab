@@ -14421,7 +14421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 0.3
-  killAfterLife: 1
+  onLifeEnd: 2
 --- !u!1 &1878122122456846
 GameObject:
   m_ObjectHideFlags: 0

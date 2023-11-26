@@ -6,12 +6,14 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance = null; // 싱글톤패턴
 
-    private int busStationCount; // 지나친 버스정류장의 수
+    // private int busStationCount; // 지나친 버스정류장의 수
 
     private float score; // 점수
     private float distanceScore; // 거리점수
     private float feverScore; // 피버점수
-    public float stationScore; // 정류장 점수
+    private float busStopScore; // 정류장 점수
+
+    // public int busStopScoreValue = 10000; // 정류장을 지나칠 시 얻는 점수
 
     public float scoreMultiple; // 점수 배율
 
@@ -49,7 +51,7 @@ public class ScoreManager : MonoBehaviour
     private void UpdateScore()
     {
         Instance.distanceScore = playerUnitMove.GetDistanceScore();
-        Instance.score = Instance.distanceScore + Instance.feverScore;
+        Instance.score = Instance.distanceScore + Instance.feverScore + Instance.busStopScore;
     }
 
     public static float GetScore()
@@ -60,5 +62,23 @@ public class ScoreManager : MonoBehaviour
     public static void AddFeverScore(float value)
     {
         Instance.feverScore += value;
+    }
+
+    public static void AddBusStopScore(float value)
+    {
+        Instance.busStopScore += value;
+    }
+
+    public void SaveMaxScore() // 최고점수를 저장
+    {
+        if(Instance.score > PlayerPrefs.GetFloat("Score"))
+        {
+            PlayerPrefs.SetFloat("Score", Instance.score);
+        }
+    }
+
+    public float GetMaxScore()
+    {
+        return PlayerPrefs.GetFloat("Score");
     }
 }

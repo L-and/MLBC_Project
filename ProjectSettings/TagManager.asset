@@ -11,6 +11,7 @@ TagManager:
   - Item
   - Coin
   - Camera
+  - Floating UI
   layers:
   - Default
   - TransparentFX

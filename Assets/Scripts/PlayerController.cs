@@ -72,12 +72,12 @@ public class PlayerController : MonoBehaviour
 
     private void colliderChange()
     {
-        if(FeverManager.isFever == false)
+        if(FeverManager.Instance.isFever == false)
         {
         normalCollider.SetActive(!normalCollider.activeSelf);
         laneChangingCollider.SetActive(!laneChangingCollider.activeSelf);
         }
-        else if(FeverManager.isFever == true)
+        else if(FeverManager.Instance.isFever == true)
         {
             normalCollider.SetActive(false);
             laneChangingCollider.SetActive(false);
@@ -191,7 +191,6 @@ public class PlayerController : MonoBehaviour
         {
             if(Input.touchCount == 0) // 터치를 하고있지 않으면
             {
-                print("슬라이드 가능!");
                 isSlideTouchInputEnabled = true; // 슬라이드입력을 다시 허용해줌
             }
 
@@ -244,6 +243,16 @@ public class PlayerController : MonoBehaviour
                 tryLaneChange();
 
             }
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow) && unitMove.GetCurrentSpeed().speed > 0) // 현재속도가 0보다 클떄 브레이크
+        {
+            unitMove.GetCurrentSpeed().accuacceleration = -unitMove.GetCurrentSpeed().breakPower;
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow)) // 브레이크 키 땔때 가속도 복원
+        {
+            unitMove.GetCurrentSpeed().accuacceleration = unitMove.GetOriginalSpeed().accuacceleration;
         }
     }
 

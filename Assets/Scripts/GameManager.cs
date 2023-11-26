@@ -57,12 +57,13 @@ public class GameManager : MonoBehaviour
         playerUnitMove = player.GetComponent<UnitMove>();
 
         initPlayerPosition = player.transform.position;
-
+        Debug.Log(Instance.playerController);
         DisableComponents();
     }
 
     public static void ActivateComponents()
     {
+        
         Instance.playerUnitMove.enabled = true;
 
         Instance.playerController.enabled = true;
@@ -100,6 +101,11 @@ public class GameManager : MonoBehaviour
         //Instance.player.transform.position = Instance.initPlayerPosition; // 플레이어 위치 재설정
         //UIManager.EnableMainUI(); // UI 재설정
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public static void GameExit() // 게임종료
+    {
+        Application.Quit();
     }
 }
 

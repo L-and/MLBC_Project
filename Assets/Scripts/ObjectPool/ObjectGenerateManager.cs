@@ -99,7 +99,7 @@ public class ObjectGenerateManager : MonoBehaviour
         {
             Vector3 tmpVectorB = new Vector3(0.0f, 0.0f, objectTransformQueue.ToArray()[index].localPosition.z);
 
-            float distance = Vector3.Distance(tmpVectorA, tmpVectorB); // spawnPos와 스폰되어있는 오브젝트들간의 거리를 얻은 후 
+            float distance = Vector3.Distance(tmpVectorA, tmpVectorB); // spawnPos와 스폰되어있는 오브젝트들간의 거리를 얻은 후
 
             if (distance < objectSpawnOffset) // objectSpawnOffset보다 가까운곳에 스폰될려하면 스폰위치 조정
             {
@@ -126,12 +126,13 @@ public class ObjectGenerateManager : MonoBehaviour
         }
 
         // 벡터를 z값으로 오름차순으로 정렬
+
         objectPositionArray = objectPositionList.OrderBy(v => v.z).ToArray<Vector3>();
-        
-        for(int i=1; i< objectPositionArray.Length; i++)
-        {
+
+        for (int i=1; i< objectPositionArray.Length; i++)
+        { 
             if ((objectPositionArray[i].z - objectPositionArray[i - 1].z) > objectSpawnOffset) // 오브젝트 사이간에 SpawnOffset만큼의 거리가 있는가?
-                return new Vector3(roads[(int)Random.Range(0, 3)].transform.position.x, objectPositionArray[i - 1].y, objectPositionArray[i - 1].z + objectSpawnOffset / 2); // 거리가 있다면 그 사이로 위치지정
+                return new Vector3(roads[(int)Random.Range(0, roads.Length)].transform.position.x, objectPositionArray[i - 1].y, objectPositionArray[i - 1].z + objectSpawnOffset / 2); // 거리가 있다면 그 사이로 위치지정
         }
 
         int nearSpawnObjectCnt = 0; // 현재 오브젝트주변에 스폰해있는 오브젝트가 몇개인지?
